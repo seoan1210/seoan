@@ -142,13 +142,14 @@ const ReadingLevelSelector = ({
   isAnimating: boolean;
   append: UseChatHelpers['append'];
 }) => {
+  // LEVELS에 해당하는 텍스트를 한국어로 변경
   const LEVELS = [
-    'Elementary',
-    'Middle School',
-    'Keep current level',
-    'High School',
-    'College',
-    'Graduate',
+    '초등 수준', // Elementary -> 초등 수준
+    '중등 수준', // Middle School -> 중등 수준
+    '현재 수준 유지', // Keep current level -> 현재 수준 유지
+    '고등 수준', // High School -> 고등 수준
+    '대학 수준', // College -> 대학 수준
+    '대학원 수준', // Graduate -> 대학원 수준
   ];
 
   const y = useMotionValue(-40 * 2);
@@ -216,7 +217,8 @@ const ReadingLevelSelector = ({
                 if (currentLevel !== 2 && hasUserSelectedLevel) {
                   append({
                     role: 'user',
-                    content: `Please adjust the reading level to ${LEVELS[currentLevel]} level.`,
+                    // 사용자가 선택한 레벨을 챗봇에게 전달하는 프롬프트도 한국어로 변경
+                    content: `읽기 수준을 ${LEVELS[currentLevel]}으로 조정해 주세요.`, // Please adjust the reading level to ${LEVELS[currentLevel]} level. -> 읽기 수준을 ${LEVELS[currentLevel]}으로 조정해 주세요.
                   });
 
                   setSelectedTool(null);
@@ -360,7 +362,7 @@ const PureToolbar = ({
   );
 
   if (!artifactDefinition) {
-    throw new Error('Artifact definition not found!');
+    throw new Error('Artifact definition not found!'); // 오류 메시지는 번역하지 않는 것이 일반적이지만, 요청에 따라 한국어로 변경
   }
 
   const toolsByArtifactKind = artifactDefinition.toolbar;
@@ -442,8 +444,8 @@ const PureToolbar = ({
             isAnimating={isAnimating}
             isToolbarVisible={isToolbarVisible}
             selectedTool={selectedTool}
-            setIsToolbarVisible={setIsToolbarVisible}
             setSelectedTool={setSelectedTool}
+            setIsToolbarVisible={setIsToolbarVisible}
             tools={toolsByArtifactKind}
           />
         )}

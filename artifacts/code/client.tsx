@@ -32,7 +32,7 @@ const OUTPUT_HANDLERS = {
     def setup_matplotlib_output():
         def custom_show():
             if plt.gcf().get_size_inches().prod() * plt.gcf().dpi ** 2 > 25_000_000:
-                print("Warning: Plot size too large, reducing quality")
+                print("경고: 플롯 크기가 너무 큽니다. 품질을 줄입니다.")
                 plt.gcf().set_dpi(100)
 
             png_buf = io.BytesIO()
@@ -69,7 +69,7 @@ interface Metadata {
 export const codeArtifact = new Artifact<'code', Metadata>({
   kind: 'code',
   description:
-    'Useful for code generation; Code execution is only available for python code.',
+    '코드 생성에 유용합니다. 코드 실행은 Python 코드에서만 가능합니다.',
   initialize: async ({ setMetadata }) => {
     setMetadata({
       outputs: [],
@@ -114,8 +114,8 @@ export const codeArtifact = new Artifact<'code', Metadata>({
   actions: [
     {
       icon: <PlayIcon size={18} />,
-      label: 'Run',
-      description: 'Execute code',
+      label: '실행',
+      description: '코드 실행',
       onClick: async ({ content, setMetadata }) => {
         const runId = generateUUID();
         const outputContent: Array<ConsoleOutputContent> = [];
@@ -210,7 +210,7 @@ export const codeArtifact = new Artifact<'code', Metadata>({
     },
     {
       icon: <UndoIcon size={18} />,
-      description: 'View Previous version',
+      description: '이전 버전 보기',
       onClick: ({ handleVersionChange }) => {
         handleVersionChange('prev');
       },
@@ -224,7 +224,7 @@ export const codeArtifact = new Artifact<'code', Metadata>({
     },
     {
       icon: <RedoIcon size={18} />,
-      description: 'View Next version',
+      description: '다음 버전 보기',
       onClick: ({ handleVersionChange }) => {
         handleVersionChange('next');
       },
@@ -238,31 +238,31 @@ export const codeArtifact = new Artifact<'code', Metadata>({
     },
     {
       icon: <CopyIcon size={18} />,
-      description: 'Copy code to clipboard',
+      description: '코드를 클립보드에 복사',
       onClick: ({ content }) => {
         navigator.clipboard.writeText(content);
-        toast.success('Copied to clipboard!');
+        toast.success('클립보드에 복사되었습니다!');
       },
     },
   ],
   toolbar: [
     {
       icon: <MessageIcon />,
-      description: 'Add comments',
+      description: '주석 추가',
       onClick: ({ appendMessage }) => {
         appendMessage({
           role: 'user',
-          content: 'Add comments to the code snippet for understanding',
+          content: '코드 스니펫에 주석을 추가하여 이해도를 높여줘',
         });
       },
     },
     {
       icon: <LogsIcon />,
-      description: 'Add logs',
+      description: '로그 추가',
       onClick: ({ appendMessage }) => {
         appendMessage({
           role: 'user',
-          content: 'Add logs to the code snippet for debugging',
+          content: '디버깅을 위해 코드 스니펫에 로그를 추가해줘',
         });
       },
     },

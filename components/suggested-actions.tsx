@@ -13,24 +13,24 @@ interface SuggestedActionsProps {
 function PureSuggestedActions({ chatId, append }: SuggestedActionsProps) {
   const suggestedActions = [
     {
-      title: 'What are the advantages',
-      label: 'of using Next.js?',
-      action: 'What are the advantages of using Next.js?',
+      title: 'Next.js 사용의',
+      label: '장점은 무엇인가요?',
+      action: 'Next.js 사용의 장점은 무엇인가요?',
     },
     {
-      title: 'Write code to',
-      label: `demonstrate djikstra's algorithm`,
-      action: `Write code to demonstrate djikstra's algorithm`,
+      title: '다익스트라 알고리즘을',
+      label: '보여주는 코드를 작성해 줘',
+      action: '다익스트라 알고리즘을 보여주는 코드를 작성해 줘',
     },
     {
-      title: 'Help me write an essay',
-      label: `about silicon valley`,
-      action: `Help me write an essay about silicon valley`,
+      title: '실리콘 밸리에 대한',
+      label: '에세이 작성을 도와줘',
+      action: '실리콘 밸리에 대한 에세이 작성을 도와줘',
     },
     {
-      title: 'What is the weather',
-      label: 'in San Francisco?',
-      action: 'What is the weather in San Francisco?',
+      title: '샌프란시스코의',
+      label: '날씨는 어떤가요?',
+      action: '샌프란시스코의 날씨는 어떤가요?',
     },
   ];
 

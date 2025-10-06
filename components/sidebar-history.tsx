@@ -125,7 +125,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
     });
 
     toast.promise(deletePromise, {
-      loading: 'Deleting chat...',
+      loading: '채팅 삭제 중...', // Deleting chat... -> 채팅 삭제 중...
       success: () => {
         mutate((chatHistories) => {
           if (chatHistories) {
@@ -136,9 +136,9 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
           }
         });
 
-        return 'Chat deleted successfully';
+        return '채팅이 성공적으로 삭제되었어요.'; // Chat deleted successfully -> 채팅이 성공적으로 삭제되었어요.
       },
-      error: 'Failed to delete chat',
+      error: '채팅 삭제에 실패했어요.', // Failed to delete chat -> 채팅 삭제에 실패했어요.
     });
 
     setShowDeleteDialog(false);
@@ -153,7 +153,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
       <SidebarGroup>
         <SidebarGroupContent>
           <div className="px-2 text-zinc-500 w-full flex flex-row justify-center items-center text-sm gap-2">
-            Login to save and revisit previous chats!
+            로그인하면 이전 채팅을 저장하고 다시 볼 수 있어요! {/* Login to save and revisit previous chats! -> 로그인하면 이전 채팅을 저장하고 다시 볼 수 있어요! */}
           </div>
         </SidebarGroupContent>
       </SidebarGroup>
@@ -164,7 +164,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
     return (
       <SidebarGroup>
         <div className="px-2 py-1 text-xs text-sidebar-foreground/50">
-          Today
+          오늘 {/* Today -> 오늘 */}
         </div>
         <SidebarGroupContent>
           <div className="flex flex-col">
@@ -194,7 +194,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
       <SidebarGroup>
         <SidebarGroupContent>
           <div className="px-2 text-zinc-500 w-full flex flex-row justify-center items-center text-sm gap-2">
-            Your conversations will appear here once you start chatting!
+            대화를 시작하면 여기에 대화 목록이 표시돼요! {/* Your conversations will appear here once you start chatting! -> 대화를 시작하면 여기에 대화 목록이 표시돼요! */}
           </div>
         </SidebarGroupContent>
       </SidebarGroup>
@@ -219,7 +219,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
                     {groupedChats.today.length > 0 && (
                       <div>
                         <div className="px-2 py-1 text-xs text-sidebar-foreground/50">
-                          Today
+                          오늘 {/* Today -> 오늘 */}
                         </div>
                         {groupedChats.today.map((chat) => (
                           <ChatItem
@@ -239,7 +239,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
                     {groupedChats.yesterday.length > 0 && (
                       <div>
                         <div className="px-2 py-1 text-xs text-sidebar-foreground/50">
-                          Yesterday
+                          어제 {/* Yesterday -> 어제 */}
                         </div>
                         {groupedChats.yesterday.map((chat) => (
                           <ChatItem
@@ -259,7 +259,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
                     {groupedChats.lastWeek.length > 0 && (
                       <div>
                         <div className="px-2 py-1 text-xs text-sidebar-foreground/50">
-                          Last 7 days
+                          지난 7일 {/* Last 7 days -> 지난 7일 */}
                         </div>
                         {groupedChats.lastWeek.map((chat) => (
                           <ChatItem
@@ -279,7 +279,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
                     {groupedChats.lastMonth.length > 0 && (
                       <div>
                         <div className="px-2 py-1 text-xs text-sidebar-foreground/50">
-                          Last 30 days
+                          지난 30일 {/* Last 30 days -> 지난 30일 */}
                         </div>
                         {groupedChats.lastMonth.map((chat) => (
                           <ChatItem
@@ -299,7 +299,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
                     {groupedChats.older.length > 0 && (
                       <div>
                         <div className="px-2 py-1 text-xs text-sidebar-foreground/50">
-                          Older than last month
+                          그 이전 {/* Older than last month -> 그 이전 */}
                         </div>
                         {groupedChats.older.map((chat) => (
                           <ChatItem
@@ -330,14 +330,14 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
 
           {hasReachedEnd ? (
             <div className="px-2 text-zinc-500 w-full flex flex-row justify-center items-center text-sm gap-2 mt-8">
-              You have reached the end of your chat history.
+              채팅 기록의 끝에 도달했어요. {/* You have reached the end of your chat history. -> 채팅 기록의 끝에 도달했어요. */}
             </div>
           ) : (
             <div className="p-2 text-zinc-500 dark:text-zinc-400 flex flex-row gap-2 items-center mt-8">
               <div className="animate-spin">
                 <LoaderIcon />
               </div>
-              <div>Loading Chats...</div>
+              <div>채팅 불러오는 중...</div> {/* Loading Chats... -> 채팅 불러오는 중... */}
             </div>
           )}
         </SidebarGroupContent>
@@ -346,16 +346,15 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogTitle>정말로 삭제하시겠어요?</AlertDialogTitle> {/* Are you absolutely sure? -> 정말로 삭제하시겠어요? */}
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your
-              chat and remove it from our servers.
+              이 작업은 되돌릴 수 없어요. 해당 채팅은 서버에서 영구적으로 삭제돼요. {/* This action cannot be undone. ... -> 이 작업은 되돌릴 수 없어요. 해당 채팅은 서버에서 영구적으로 삭제돼요. */}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>취소</AlertDialogCancel> {/* Cancel -> 취소 */}
             <AlertDialogAction onClick={handleDelete}>
-              Continue
+              계속 진행 {/* Continue -> 계속 진행 */}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

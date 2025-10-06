@@ -11,13 +11,11 @@ const getActionText = (
 ) => {
   switch (type) {
     case 'create':
-      return tense === 'present' ? 'Creating' : 'Created';
+      return tense === 'present' ? '생성 중' : '생성됨';
     case 'update':
-      return tense === 'present' ? 'Updating' : 'Updated';
+      return tense === 'present' ? '업데이트 중' : '업데이트됨';
     case 'request-suggestions':
-      return tense === 'present'
-        ? 'Adding suggestions'
-        : 'Added suggestions to';
+      return tense === 'present' ? '개선 제안 추가 중' : '개선 제안 추가됨';
     default:
       return null;
   }
@@ -43,7 +41,7 @@ function PureDocumentToolResult({
       onClick={(event) => {
         if (isReadonly) {
           toast.error(
-            'Viewing files in shared chats is currently not supported.',
+            '공유된 채팅에서 파일을 보는 기능은 현재 지원되지 않습니다.',
           );
           return;
         }
@@ -78,7 +76,7 @@ function PureDocumentToolResult({
         ) : null}
       </div>
       <div className="text-left">
-        {`${getActionText(type, 'past')} "${result.title}"`}
+        {`"${result.title}" ${getActionText(type, 'past')}`}
       </div>
     </button>
   );
@@ -106,7 +104,7 @@ function PureDocumentToolCall({
       onClick={(event) => {
         if (isReadonly) {
           toast.error(
-            'Viewing files in shared chats is currently not supported.',
+            '공유된 채팅에서 파일을 보는 기능은 현재 지원되지 않습니다.',
           );
           return;
         }

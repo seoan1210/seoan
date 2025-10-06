@@ -267,7 +267,7 @@ export const ThinkingMessage = () => {
 
         <div className="flex flex-col gap-2 w-full">
           <div className="flex flex-col gap-4 text-muted-foreground">
-            Hmm...
+            잠시만 기다려 주세요...
           </div>
         </div>
       </div>

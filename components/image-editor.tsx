@@ -30,7 +30,7 @@ export function ImageEditor({
               <LoaderIcon />
             </div>
           )}
-          <div>Generating Image...</div>
+          <div>이미지 생성 중...</div>
         </div>
       ) : (
         <picture>

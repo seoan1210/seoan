@@ -17,7 +17,7 @@ export type ArtifactActionContext<M = any> = {
 type ArtifactAction<M = any> = {
   icon: ReactNode;
   label?: string;
-  description: string;
+  description: string; // 사용자에게 노출되는 액션 버튼 설명
   onClick: (context: ArtifactActionContext<M>) => Promise<void> | void;
   isDisabled?: (context: ArtifactActionContext<M>) => boolean;
 };
@@ -27,7 +27,7 @@ export type ArtifactToolbarContext = {
 };
 
 export type ArtifactToolbarItem = {
-  description: string;
+  description: string; // 사용자에게 노출되는 툴바 버튼 설명
   icon: ReactNode;
   onClick: (context: ArtifactToolbarContext) => void;
 };
@@ -55,7 +55,7 @@ interface InitializeParameters<M = any> {
 
 type ArtifactConfig<T extends string, M = any> = {
   kind: T;
-  description: string;
+  description: string; // 아티팩트 종류에 대한 설명 (예: 텍스트, 코드)
   content: ComponentType<ArtifactContent<M>>;
   actions: Array<ArtifactAction<M>>;
   toolbar: ArtifactToolbarItem[];

@@ -70,6 +70,7 @@ function PureMultimodalInput({
   const resetHeight = () => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
+      // 초기 높이로 리셋 (CSS의 min-height 또는 고정값에 맞춰 조정)
       textareaRef.current.style.height = '98px';
     }
   };
@@ -82,7 +83,7 @@ function PureMultimodalInput({
   useEffect(() => {
     if (textareaRef.current) {
       const domValue = textareaRef.current.value;
-      // Prefer DOM value over localStorage to handle hydration
+      // hydration을 처리하기 위해 localStorage보다 DOM 값을 우선함
       const finalValue = domValue || localStorageInput || '';
       setInput(finalValue);
       adjustHeight();
@@ -149,7 +150,7 @@ function PureMultimodalInput({
       const { error } = await response.json();
       toast.error(error);
     } catch (error) {
-      toast.error('Failed to upload file, please try again!');
+      toast.error('파일 업로드에 실패했어요. 다시 시도해 주세요!');
     }
   };
 
@@ -171,7 +172,7 @@ function PureMultimodalInput({
           ...successfullyUploadedAttachments,
         ]);
       } catch (error) {
-        console.error('Error uploading files!', error);
+        console.error('파일 업로드 오류 발생!', error);
       } finally {
         setUploadQueue([]);
       }
@@ -222,7 +223,7 @@ function PureMultimodalInput({
       <Textarea
         data-testid="multimodal-input"
         ref={textareaRef}
-        placeholder="Send a message..."
+        placeholder="메시지를 보내세요..."
         value={input}
         onChange={handleInput}
         className={cx(
@@ -240,7 +241,7 @@ function PureMultimodalInput({
             event.preventDefault();
 
             if (status !== 'ready') {
-              toast.error('Please wait for the model to finish its response!');
+              toast.error('모델이 응답을 마칠 때까지 기다려 주세요!');
             } else {
               submitForm();
             }
@@ -317,6 +318,7 @@ function PureStopButton({
       onClick={(event) => {
         event.preventDefault();
         stop();
+        // stop 후 메시지 상태를 업데이트하여 UI를 강제 새로 고침
         setMessages((messages) => messages);
       }}
     >
@@ -344,6 +346,7 @@ function PureSendButton({
         event.preventDefault();
         submitForm();
       }}
+      // 입력 내용이 없거나 (input.length === 0) 파일 업로드 대기열이 있을 때 (uploadQueue.length > 0) 비활성화
       disabled={input.length === 0 || uploadQueue.length > 0}
     >
       <ArrowUpIcon size={14} />

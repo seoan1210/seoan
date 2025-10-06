@@ -100,7 +100,7 @@ export function Console({ consoleOutputs, setConsoleOutputs }: ConsoleProps) {
             <div className="text-muted-foreground">
               <TerminalWindowIcon />
             </div>
-            <div>Console</div>
+            <div>콘솔</div>
           </div>
           <Button
             variant="ghost"
@@ -139,7 +139,7 @@ export function Console({ consoleOutputs, setConsoleOutputs }: ConsoleProps) {
                   </div>
                   <div className="text-muted-foreground">
                     {consoleOutput.status === 'in_progress'
-                      ? 'Initializing...'
+                      ? '초기화 중...'
                       : consoleOutput.status === 'loading_packages'
                         ? consoleOutput.contents.map((content) =>
                             content.type === 'text' ? content.value : null,
@@ -154,7 +154,7 @@ export function Console({ consoleOutputs, setConsoleOutputs }: ConsoleProps) {
                       <picture key={`${consoleOutput.id}-${index}`}>
                         <img
                           src={content.value}
-                          alt="output"
+                          alt="출력 이미지"
                           className="rounded-md max-w-screen-toast-mobile w-full"
                         />
                       </picture>

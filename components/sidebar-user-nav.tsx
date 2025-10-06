@@ -40,7 +40,7 @@ export function SidebarUserNav({ user }: { user: User }) {
                 <div className="flex flex-row gap-2">
                   <div className="size-6 bg-zinc-500/30 rounded-full animate-pulse" />
                   <span className="bg-zinc-500/30 text-transparent rounded-md animate-pulse">
-                    Loading auth status
+                    인증 상태 불러오는 중 {/* Loading auth status -> 인증 상태 불러오는 중 */}
                   </span>
                 </div>
                 <div className="animate-spin text-zinc-500">
@@ -54,13 +54,13 @@ export function SidebarUserNav({ user }: { user: User }) {
               >
                 <Image
                   src={`https://avatar.vercel.sh/${user.email}`}
-                  alt={user.email ?? 'User Avatar'}
+                  alt={user.email ?? '사용자 아바타'} {/* User Avatar -> 사용자 아바타 */}
                   width={24}
                   height={24}
                   className="rounded-full"
                 />
                 <span data-testid="user-email" className="truncate">
-                  {isGuest ? 'Guest' : user?.email}
+                  {isGuest ? '게스트' : user?.email} {/* Guest -> 게스트 */}
                 </span>
                 <ChevronUp className="ml-auto" />
               </SidebarMenuButton>
@@ -76,7 +76,8 @@ export function SidebarUserNav({ user }: { user: User }) {
               className="cursor-pointer"
               onSelect={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             >
-              {`Toggle ${theme === 'light' ? 'dark' : 'light'} mode`}
+              {/* Toggle dark/light mode -> 라이트/다크 모드 전환 */}
+              {theme === 'light' ? '다크 모드로 전환' : '라이트 모드로 전환'}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild data-testid="user-nav-item-auth">
@@ -88,7 +89,7 @@ export function SidebarUserNav({ user }: { user: User }) {
                     toast({
                       type: 'error',
                       description:
-                        'Checking authentication status, please try again!',
+                        '인증 상태 확인 중이에요. 잠시 후 다시 시도해 주세요!', {/* Checking authentication status, please try again! -> 인증 상태 확인 중이에요. 잠시 후 다시 시도해 주세요! */}
                     });
 
                     return;
@@ -103,7 +104,8 @@ export function SidebarUserNav({ user }: { user: User }) {
                   }
                 }}
               >
-                {isGuest ? 'Login to your account' : 'Sign out'}
+                {/* Login to your account / Sign out */}
+                {isGuest ? '계정 로그인' : '로그아웃'}
               </button>
             </DropdownMenuItem>
           </DropdownMenuContent>

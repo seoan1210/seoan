@@ -30,12 +30,14 @@ export function PureMessageActions({
   const { mutate } = useSWRConfig();
   const [_, copyToClipboard] = useCopyToClipboard();
 
+  // 로딩 중이거나 사용자의 메시지인 경우 액션 버튼을 표시하지 않음
   if (isLoading) return null;
   if (message.role === 'user') return null;
 
   return (
     <TooltipProvider delayDuration={0}>
       <div className="flex flex-row gap-2">
+        {/* 1. 복사 버튼 */}
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
@@ -49,26 +51,27 @@ export function PureMessageActions({
                   .trim();
 
                 if (!textFromParts) {
-                  toast.error("There's no text to copy!");
+                  toast.error("복사할 텍스트가 없어요!");
                   return;
                 }
 
                 await copyToClipboard(textFromParts);
-                toast.success('Copied to clipboard!');
+                toast.success('클립보드에 복사되었어요!');
               }}
             >
               <CopyIcon />
             </Button>
           </TooltipTrigger>
-          <TooltipContent>Copy</TooltipContent>
+          <TooltipContent>복사</TooltipContent>
         </Tooltip>
 
+        {/* 2. 좋아요 (Upvote) 버튼 */}
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
               data-testid="message-upvote"
               className="py-1 px-2 h-fit text-muted-foreground !pointer-events-auto"
-              disabled={vote?.isUpvoted}
+              disabled={vote?.isUpvoted} // 이미 좋아요를 눌렀으면 비활성화
               variant="outline"
               onClick={async () => {
                 const upvote = fetch('/api/vote', {
@@ -81,7 +84,7 @@ export function PureMessageActions({
                 });
 
                 toast.promise(upvote, {
-                  loading: 'Upvoting Response...',
+                  loading: '답변을 추천하는 중...',
                   success: () => {
                     mutate<Array<Vote>>(
                       `/api/vote?chatId=${chatId}`,
@@ -104,24 +107,26 @@ export function PureMessageActions({
                       { revalidate: false },
                     );
 
-                    return 'Upvoted Response!';
+                    return '답변을 추천했어요!';
                   },
-                  error: 'Failed to upvote response.',
+                  error: '답변 추천에 실패했어요.',
                 });
               }}
             >
               <ThumbUpIcon />
             </Button>
           </TooltipTrigger>
-          <TooltipContent>Upvote Response</TooltipContent>
+          <TooltipContent>답변 추천</TooltipContent>
         </Tooltip>
 
+        {/* 3. 싫어요 (Downvote) 버튼 */}
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
               data-testid="message-downvote"
               className="py-1 px-2 h-fit text-muted-foreground !pointer-events-auto"
               variant="outline"
+              // 좋아요를 누르지 않은 상태(null)이거나, isUpvoted가 false일 때만 비활성화
               disabled={vote && !vote.isUpvoted}
               onClick={async () => {
                 const downvote = fetch('/api/vote', {
@@ -134,7 +139,7 @@ export function PureMessageActions({
                 });
 
                 toast.promise(downvote, {
-                  loading: 'Downvoting Response...',
+                  loading: '답변을 비추천하는 중...',
                   success: () => {
                     mutate<Array<Vote>>(
                       `/api/vote?chatId=${chatId}`,
@@ -157,16 +162,16 @@ export function PureMessageActions({
                       { revalidate: false },
                     );
 
-                    return 'Downvoted Response!';
+                    return '답변을 비추천했어요.';
                   },
-                  error: 'Failed to downvote response.',
+                  error: '답변 비추천에 실패했어요.',
                 });
               }}
             >
               <ThumbDownIcon />
             </Button>
           </TooltipTrigger>
-          <TooltipContent>Downvote Response</TooltipContent>
+          <TooltipContent>답변 비추천</TooltipContent>
         </Tooltip>
       </div>
     </TooltipProvider>

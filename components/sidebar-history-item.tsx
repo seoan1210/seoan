@@ -57,7 +57,8 @@ const PureChatItem = ({
             showOnHover={!isActive}
           >
             <MoreHorizontalIcon />
-            <span className="sr-only">More</span>
+            {/* 툴팁/스크린 리더용 텍스트 번역 */}
+            <span className="sr-only">더 보기</span>
           </SidebarMenuAction>
         </DropdownMenuTrigger>
 
@@ -65,7 +66,8 @@ const PureChatItem = ({
           <DropdownMenuSub>
             <DropdownMenuSubTrigger className="cursor-pointer">
               <ShareIcon />
-              <span>Share</span>
+              {/* 'Share' 번역 */}
+              <span>공유</span>
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
@@ -77,7 +79,8 @@ const PureChatItem = ({
                 >
                   <div className="flex flex-row gap-2 items-center">
                     <LockIcon size={12} />
-                    <span>Private</span>
+                    {/* 'Private' 번역 */}
+                    <span>비공개</span>
                   </div>
                   {visibilityType === 'private' ? (
                     <CheckCircleFillIcon />
@@ -91,7 +94,8 @@ const PureChatItem = ({
                 >
                   <div className="flex flex-row gap-2 items-center">
                     <GlobeIcon />
-                    <span>Public</span>
+                    {/* 'Public' 번역 */}
+                    <span>공개</span>
                   </div>
                   {visibilityType === 'public' ? <CheckCircleFillIcon /> : null}
                 </DropdownMenuItem>
@@ -104,7 +108,8 @@ const PureChatItem = ({
             onSelect={() => onDelete(chat.id)}
           >
             <TrashIcon />
-            <span>Delete</span>
+            {/* 'Delete' 번역 */}
+            <span>삭제</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

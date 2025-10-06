@@ -4,9 +4,9 @@ import ReactMarkdown, { type Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { CodeBlock } from './code-block';
 
-// 💻 오직 <has_function_call> 만 감지
+
 const TARGET_TOKEN = '<has_function_call>';
-const EMOJI = '💻';
+const EMOJI = '💻 ';
 
 const components: Partial<Components> = {
   // 코드 블록

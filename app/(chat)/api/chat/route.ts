@@ -29,7 +29,7 @@ import { geolocation } from '@vercel/functions';
 
 export const maxDuration = 60;
 
-// 💡 수정됨: TypeScript 타입을 명시적으로 지정하여 빌드 오류를 해결
+// 💡 타입스크립트 타입을 명시하고 has_function_call 태그를 제거하는 헬퍼 함수
 function filterFunctionCallTag(text: string | undefined): string | undefined {
   if (!text || typeof text !== 'string') {
     return text;
@@ -165,10 +165,10 @@ export async function POST(request: Request) {
                   responseMessages: response.messages,
                 });
                 
-                // 💡 DB 저장을 위한 필터링 로직: 
-                // 최종 메시지 파트를 정리하여 DB에 깔끔하게 저장
-                const cleanedParts = assistantMessage.parts.map(part => {
+                // 💡 최종 수정: 'parts'가 undefined일 경우를 대비하여 ?? []를 사용해 빌드 오류 해결
+                const cleanedParts = (assistantMessage.parts ?? []).map(part => {
                     if (part.text) {
+                        // DB에 저장하기 전에 태그 제거
                         part.text = filterFunctionCallTag(part.text);
                     }
                     return part;
@@ -180,7 +180,7 @@ export async function POST(request: Request) {
                       id: assistantId,
                       chatId: id,
                       role: assistantMessage.role,
-                      parts: cleanedParts, // 💡 필터링된 parts 사용
+                      parts: cleanedParts, // 필터링된 parts 사용
                       attachments:
                         assistantMessage.experimental_attachments ?? [],
                       createdAt: new Date(),
@@ -201,7 +201,7 @@ export async function POST(request: Request) {
         result.consumeStream();
 
         result.mergeIntoDataStream(dataStream, {
-          sendReasoning: false, // 💡 수정됨: 도구 사용 추론 과정을 스트림에 보내지 않도록 설정
+          sendReasoning: false, // 💡 최종 수정: 도구 사용 추론 과정을 스트림에 보내지 않도록 설정
         });
       },
       onError: () => {

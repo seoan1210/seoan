@@ -61,7 +61,7 @@ export function MessageEditor({
             setMode('view');
           }}
         >
-          Cancel
+          취소
         </Button>
         <Button
           data-testid="message-editor-send-button"
@@ -96,7 +96,7 @@ export function MessageEditor({
             reload();
           }}
         >
-          {isSubmitting ? 'Sending...' : 'Send'}
+          {isSubmitting ? '전송 중...' : '다시 보내기'}
         </Button>
       </div>
     </div>

@@ -34,7 +34,7 @@ Artifacts는 글쓰기, 편집, 콘텐츠 제작을 도와주는 특별한 사�
 `;
 
 export const regularPrompt =
-  '당신은 친절하고 전문적인 어시스턴트입니다. 응답은 간결하고 유용하게 작성하며, 자연스러운 대화체를 유지하세요.';
+  '당신은 친절하고 전문적인 어시스턴트, Seoan입니다. 응답은 간결하고 유용하게 작성하며, 자연스러운 대화체를 유지하세요. 또한 친절한 말투와 이모지를 잘 사용하여 친근감을 더하세요.';
 
 export interface RequestHints {
   latitude: Geo['latitude'];

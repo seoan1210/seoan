@@ -36,7 +36,7 @@ export async function POST(request: Request) {
     const json = await request.json();
     requestBody = postRequestBodySchema.parse(json);
   } catch (_) {
-    return new Response('Invalid request body', { status: 400 });
+    return new Response('유효하지 않은 요청 본문입니다.', { status: 400 });
   }
 
   try {
@@ -45,7 +45,7 @@ export async function POST(request: Request) {
     const session = await auth();
 
     if (!session?.user) {
-      return new Response('Unauthorized', { status: 401 });
+      return new Response('인증되지 않았습니다.', { status: 401 });
     }
 
     const userType: UserType = session.user.type;
@@ -57,7 +57,7 @@ export async function POST(request: Request) {
 
     if (messageCount > entitlementsByUserType[userType].maxMessagesPerDay) {
       return new Response(
-        'You have exceeded your maximum number of messages for the day! Please try again later.',
+        '일일 최대 메시지 수를 초과했습니다! 잠시 후 다시 시도해 주세요.',
         {
           status: 429,
         },
@@ -74,7 +74,7 @@ export async function POST(request: Request) {
       await saveChat({ id, userId: session.user.id, title });
     } else {
       if (chat.userId !== session.user.id) {
-        return new Response('Forbidden', { status: 403 });
+        return new Response('접근이 금지되었습니다.', { status: 403 });
       }
     }
 
@@ -145,7 +145,7 @@ export async function POST(request: Request) {
                 });
 
                 if (!assistantId) {
-                  throw new Error('No assistant message found!');
+                  throw new Error('어시스턴트 메시지를 찾을 수 없습니다!');
                 }
 
                 const [, assistantMessage] = appendResponseMessages({
@@ -167,7 +167,7 @@ export async function POST(request: Request) {
                   ],
                 });
               } catch (_) {
-                console.error('Failed to save chat');
+                console.error('채팅 저장에 실패했습니다.');
               }
             }
           },
@@ -184,11 +184,11 @@ export async function POST(request: Request) {
         });
       },
       onError: () => {
-        return 'Oops, an error occurred!';
+        return '앗, 오류가 발생했습니다!';
       },
     });
   } catch (_) {
-    return new Response('An error occurred while processing your request!', {
+    return new Response('요청을 처리하는 중에 오류가 발생했습니다!', {
       status: 500,
     });
   }
@@ -199,27 +199,27 @@ export async function DELETE(request: Request) {
   const id = searchParams.get('id');
 
   if (!id) {
-    return new Response('Not Found', { status: 404 });
+    return new Response('찾을 수 없습니다.', { status: 404 });
   }
 
   const session = await auth();
 
   if (!session?.user?.id) {
-    return new Response('Unauthorized', { status: 401 });
+    return new Response('인증되지 않았습니다.', { status: 401 });
   }
 
   try {
     const chat = await getChatById({ id });
 
     if (chat.userId !== session.user.id) {
-      return new Response('Forbidden', { status: 403 });
+      return new Response('접근이 금지되었습니다.', { status: 403 });
     }
 
     const deletedChat = await deleteChatById({ id });
 
     return Response.json(deletedChat, { status: 200 });
   } catch (error) {
-    return new Response('An error occurred while processing your request!', {
+    return new Response('요청을 처리하는 중에 오류가 발생했습니다!', {
       status: 500,
     });
   }

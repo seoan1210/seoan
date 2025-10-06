@@ -29,12 +29,15 @@ import { geolocation } from '@vercel/functions';
 
 export const maxDuration = 60;
 
-// 💡 헬퍼 함수: has_function_call 태그를 제거하는 함수
-function filterFunctionCallTag(text) {
+// 💡 수정됨: TypeScript 타입을 명시적으로 지정하여 빌드 오류를 해결
+function filterFunctionCallTag(text: string | undefined): string | undefined {
   if (!text || typeof text !== 'string') {
     return text;
   }
-  const regex = /<has_function_call>|<\/has_function_call>/g;
+  
+  // 정규 표현식을 사용해 <has_function_call> 와 </has_function_call> 을 모두 제거
+  const regex = /<has_function_call>|<\/has_function_call>/g; 
+  
   return text.replace(regex, '').trim();
 }
 
@@ -162,14 +165,14 @@ export async function POST(request: Request) {
                   responseMessages: response.messages,
                 });
                 
-                // 💡 수정 1: DB에 저장하기 전에 필터링 함수를 사용
+                // 💡 DB 저장을 위한 필터링 로직: 
+                // 최종 메시지 파트를 정리하여 DB에 깔끔하게 저장
                 const cleanedParts = assistantMessage.parts.map(part => {
                     if (part.text) {
                         part.text = filterFunctionCallTag(part.text);
                     }
                     return part;
                 });
-                // ---------------------------------------------
                 
                 await saveMessages({
                   messages: [
@@ -198,7 +201,7 @@ export async function POST(request: Request) {
         result.consumeStream();
 
         result.mergeIntoDataStream(dataStream, {
-          sendReasoning: false, // 💡 수정 2: Tool Use 관련 추론 내용을 보내지 않도록 설정
+          sendReasoning: false, // 💡 수정됨: 도구 사용 추론 과정을 스트림에 보내지 않도록 설정
         });
       },
       onError: () => {
@@ -212,4 +215,33 @@ export async function POST(request: Request) {
   }
 }
 
-// ... (DELETE 함수는 그대로 유지)
+export async function DELETE(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get('id');
+
+  if (!id) {
+    return new Response('찾을 수 없습니다.', { status: 404 });
+  }
+
+  const session = await auth();
+
+  if (!session?.user?.id) {
+    return new Response('인증되지 않았습니다.', { status: 401 });
+  }
+
+  try {
+    const chat = await getChatById({ id });
+
+    if (chat.userId !== session.user.id) {
+      return new Response('접근이 금지되었습니다.', { status: 403 });
+    }
+
+    const deletedChat = await deleteChatById({ id });
+
+    return Response.json(deletedChat, { status: 200 });
+  } catch (error) {
+    return new Response('요청을 처리하는 중에 오류가 발생했습니다!', {
+      status: 500,
+    });
+  }
+}

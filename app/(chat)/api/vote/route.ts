@@ -6,23 +6,23 @@ export async function GET(request: Request) {
   const chatId = searchParams.get('chatId');
 
   if (!chatId) {
-    return new Response('chatId is required', { status: 400 });
+    return new Response('chatId가 필요합니다.', { status: 400 });
   }
 
   const session = await auth();
 
   if (!session || !session.user || !session.user.email) {
-    return new Response('Unauthorized', { status: 401 });
+    return new Response('인증되지 않았습니다.', { status: 401 });
   }
 
   const chat = await getChatById({ id: chatId });
 
   if (!chat) {
-    return new Response('Chat not found', { status: 404 });
+    return new Response('채팅을 찾을 수 없습니다.', { status: 404 });
   }
 
   if (chat.userId !== session.user.id) {
-    return new Response('Unauthorized', { status: 401 });
+    return new Response('인증되지 않았습니다.', { status: 401 });
   }
 
   const votes = await getVotesByChatId({ id: chatId });
@@ -39,23 +39,23 @@ export async function PATCH(request: Request) {
     await request.json();
 
   if (!chatId || !messageId || !type) {
-    return new Response('messageId and type are required', { status: 400 });
+    return new Response('chatId, messageId, 그리고 type이 모두 필요합니다.', { status: 400 });
   }
 
   const session = await auth();
 
   if (!session || !session.user || !session.user.email) {
-    return new Response('Unauthorized', { status: 401 });
+    return new Response('인증되지 않았습니다.', { status: 401 });
   }
 
   const chat = await getChatById({ id: chatId });
 
   if (!chat) {
-    return new Response('Chat not found', { status: 404 });
+    return new Response('채팅을 찾을 수 없습니다.', { status: 404 });
   }
 
   if (chat.userId !== session.user.id) {
-    return new Response('Unauthorized', { status: 401 });
+    return new Response('인증되지 않았습니다.', { status: 401 });
   }
 
   await voteMessage({
@@ -64,5 +64,5 @@ export async function PATCH(request: Request) {
     type: type,
   });
 
-  return new Response('Message voted', { status: 200 });
+  return new Response('메시지에 투표했습니다.', { status: 200 });
 }

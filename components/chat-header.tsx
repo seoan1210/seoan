@@ -71,16 +71,16 @@ function PureChatHeader({
         />
       )}
 
-      {/* 기존 Vercel 버튼 위치를 유지하기 위해 투명한 더미 요소를 사용하거나, 
-        md:ml-auto 속성이 다음 요소에 적용되도록 버튼을 조건부 렌더링에서 제거합니다. 
-        여기서는 원본 버튼의 레이아웃 클래스(hidden md:flex)를 유지하면서 내용을 제거합니다.
+      {/* 이전 Vercel 버튼 위치를 유지하기 위한 더미 요소.
+        타입 오류 해결을 위해 VercelIcon에서 className="text-transparent"를 제거했어. 
+        버튼의 전체 클래스가 투명 처리를 해주기 때문에 레이아웃은 유지돼.
       */}
       <Button
         className="bg-transparent dark:bg-transparent hover:bg-transparent dark:hover:bg-transparent text-transparent hidden md:flex py-1.5 px-2 h-fit md:h-[34px] order-4 md:ml-auto pointer-events-none"
         asChild
       >
         <div className="flex flex-row items-center justify-center">
-          <VercelIcon size={16} className="text-transparent" />
+          <VercelIcon size={16} />
           <span className="ml-1"></span>
         </div>
       </Button>

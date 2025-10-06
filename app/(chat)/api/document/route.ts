@@ -11,13 +11,13 @@ export async function GET(request: Request) {
   const id = searchParams.get('id');
 
   if (!id) {
-    return new Response('Missing id', { status: 400 });
+    return new Response('필수 항목인 id가 누락되었습니다.', { status: 400 });
   }
 
   const session = await auth();
 
   if (!session?.user?.id) {
-    return new Response('Unauthorized', { status: 401 });
+    return new Response('인증되지 않았습니다.', { status: 401 });
   }
 
   const documents = await getDocumentsById({ id });
@@ -25,11 +25,11 @@ export async function GET(request: Request) {
   const [document] = documents;
 
   if (!document) {
-    return new Response('Not found', { status: 404 });
+    return new Response('문서를 찾을 수 없습니다.', { status: 404 });
   }
 
   if (document.userId !== session.user.id) {
-    return new Response('Forbidden', { status: 403 });
+    return new Response('접근이 금지되었습니다.', { status: 403 });
   }
 
   return Response.json(documents, { status: 200 });
@@ -40,13 +40,13 @@ export async function POST(request: Request) {
   const id = searchParams.get('id');
 
   if (!id) {
-    return new Response('Missing id', { status: 400 });
+    return new Response('필수 항목인 id가 누락되었습니다.', { status: 400 });
   }
 
   const session = await auth();
 
   if (!session?.user?.id) {
-    return new Response('Unauthorized', { status: 401 });
+    return new Response('인증되지 않았습니다.', { status: 401 });
   }
 
   const {
@@ -62,7 +62,7 @@ export async function POST(request: Request) {
     const [document] = documents;
 
     if (document.userId !== session.user.id) {
-      return new Response('Forbidden', { status: 403 });
+      return new Response('접근이 금지되었습니다.', { status: 403 });
     }
   }
 
@@ -83,17 +83,17 @@ export async function DELETE(request: Request) {
   const timestamp = searchParams.get('timestamp');
 
   if (!id) {
-    return new Response('Missing id', { status: 400 });
+    return new Response('필수 항목인 id가 누락되었습니다.', { status: 400 });
   }
 
   if (!timestamp) {
-    return new Response('Missing timestamp', { status: 400 });
+    return new Response('필수 항목인 timestamp가 누락되었습니다.', { status: 400 });
   }
 
   const session = await auth();
 
   if (!session?.user?.id) {
-    return new Response('Unauthorized', { status: 401 });
+    return new Response('인증되지 않았습니다.', { status: 401 });
   }
 
   const documents = await getDocumentsById({ id });
@@ -101,7 +101,7 @@ export async function DELETE(request: Request) {
   const [document] = documents;
 
   if (document.userId !== session.user.id) {
-    return new Response('Unauthorized', { status: 401 });
+    return new Response('인증되지 않았습니다.', { status: 401 }); // 여기는 Forbidden(403) 대신 Unauthorized(401)를 유지할게.
   }
 
   const documentsDeleted = await deleteDocumentsByIdAfterTimestamp({

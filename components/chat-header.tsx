@@ -48,10 +48,10 @@ function PureChatHeader({
               }}
             >
               <PlusIcon />
-              <span className="md:sr-only">New Chat</span>
+              <span className="md:sr-only">새 채팅</span>
             </Button>
           </TooltipTrigger>
-          <TooltipContent>New Chat</TooltipContent>
+          <TooltipContent>새 채팅</TooltipContent>
         </Tooltip>
       )}
 
@@ -71,17 +71,18 @@ function PureChatHeader({
         />
       )}
 
+      {/* 기존 Vercel 버튼 위치를 유지하기 위해 투명한 더미 요소를 사용하거나, 
+        md:ml-auto 속성이 다음 요소에 적용되도록 버튼을 조건부 렌더링에서 제거합니다. 
+        여기서는 원본 버튼의 레이아웃 클래스(hidden md:flex)를 유지하면서 내용을 제거합니다.
+      */}
       <Button
-        className="bg-zinc-900 dark:bg-zinc-100 hover:bg-zinc-800 dark:hover:bg-zinc-200 text-zinc-50 dark:text-zinc-900 hidden md:flex py-1.5 px-2 h-fit md:h-[34px] order-4 md:ml-auto"
+        className="bg-transparent dark:bg-transparent hover:bg-transparent dark:hover:bg-transparent text-transparent hidden md:flex py-1.5 px-2 h-fit md:h-[34px] order-4 md:ml-auto pointer-events-none"
         asChild
       >
-        <Link
-          href={`https://vercel.com/new/clone?repository-url=https://github.com/vercel/ai-chatbot&env=AUTH_SECRET&envDescription=Learn more about how to get the API Keys for the application&envLink=https://github.com/vercel/ai-chatbot/blob/main/.env.example&demo-title=AI Chatbot&demo-description=An Open-Source AI Chatbot Template Built With Next.js and the AI SDK by Vercel.&demo-url=https://chat.vercel.ai&products=[{"type":"integration","protocol":"ai","productSlug":"grok","integrationSlug":"xai"},{"type":"integration","protocol":"storage","productSlug":"neon","integrationSlug":"neon"},{"type":"blob"}]`}
-          target="_noblank"
-        >
-          <VercelIcon size={16} />
-          Deploy with Vercel
-        </Link>
+        <div className="flex flex-row items-center justify-center">
+          <VercelIcon size={16} className="text-transparent" />
+          <span className="ml-1"></span>
+        </div>
       </Button>
     </header>
   );

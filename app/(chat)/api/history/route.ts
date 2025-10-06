@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
 
   if (startingAfter && endingBefore) {
     return Response.json(
-      'Only one of starting_after or ending_before can be provided!',
+      'starting_after 또는 ending_before 중 하나만 제공해야 합니다.',
       { status: 400 },
     );
   }
@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
   const session = await auth();
 
   if (!session?.user?.id) {
-    return Response.json('Unauthorized!', { status: 401 });
+    return Response.json('인증되지 않았습니다!', { status: 401 });
   }
 
   try {
@@ -32,6 +32,6 @@ export async function GET(request: NextRequest) {
 
     return Response.json(chats);
   } catch (_) {
-    return Response.json('Failed to fetch chats!', { status: 500 });
+    return Response.json('채팅 목록을 불러오는 데 실패했습니다.', { status: 500 });
   }
 }

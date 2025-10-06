@@ -32,7 +32,7 @@ function PureArtifactActions({
   );
 
   if (!artifactDefinition) {
-    throw new Error('Artifact definition not found!');
+    throw new Error('아티팩트 정의를 찾을 수 없습니다!');
   }
 
   const actionContext: ArtifactActionContext = {
@@ -62,7 +62,7 @@ function PureArtifactActions({
                 try {
                   await Promise.resolve(action.onClick(actionContext));
                 } catch (error) {
-                  toast.error('Failed to execute action');
+                  toast.error('액션 실행에 실패했습니다.');
                 } finally {
                   setIsLoading(false);
                 }

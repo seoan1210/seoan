@@ -20,7 +20,7 @@ const PrivacyPolicyPage = () => {
         1. 수집하는 개인정보의 항목 및 수집 방법
       </h2>
       <p className="mb-4 text-gray-700 dark:text-gray-300">
-        Seoan AI(이하 '당사')는 서비스 이용 과정에서 다음과 같은 정보를 자동으로 수집할 수 있습니다.
+        Seoan AI(이하 '당사')는 서비스 이용 과정에서 다음과 같은 정보를 **자동으로 수집**할 수 있습니다.
       </p>
 
       <div className="overflow-x-auto mb-6">
@@ -48,17 +48,18 @@ const PrivacyPolicyPage = () => {
         2. 개인정보의 제3자 제공 및 광고 게재
       </h2>
       <p className="mb-4 text-gray-700 dark:text-gray-300">
-        당사는 서비스 운영 및 수익화를 위해 <strong>Google AdSense<strong>를 통해 광고를 게재하며, 이 과정에서 이용자의 IP 주소, Cookie 정보 등 비식별화된 정보가 Google 및 광고 파트너에게 제공될 수 있습니다. 이용자는 브라우저 설정을 통해 Cookie를 거부하거나, Google 광고 설정 페이지를 통해 맞춤형 광고를 거부할 수 있습니다.
+        당사는 서비스 운영 및 수익화를 위해 **Google AdSense**를 통해 광고를 게재하며, 이 과정에서 이용자의 IP 주소, Cookie 정보 등 비식별화된 정보가 Google 및 광고 파트너에게 제공될 수 있습니다. 이용자는 브라우저 설정을 통해 Cookie를 거부하거나, Google 광고 설정 페이지를 통해 맞춤형 광고를 거부할 수 있습니다.
       </p>
       
       <h2 className="text-xl font-semibold mb-3 text-gray-800 dark:text-gray-200">
         3. 개인정보 보호책임자 및 연락처
       </h2>
       <p className="text-gray-700 dark:text-gray-300">
-        개인정보 보호 관련 문의는 아래 연락처로 문의해 주시기 바랍니다.
+        이용자는 서비스 이용과 관련하여 발생하는 모든 개인정보 보호 관련 문의, 불만 처리 등에 관한 사항을 아래 연락처로 문의해 주시기 바랍니다.
       </p>
       <ul className="list-disc list-inside ml-4 text-gray-700 dark:text-gray-300 mt-2">
-        <li><strong>책임자:<strong> 서안</li>
+        <li>**책임자:** [**운영자**]</li>
+        <li>**연락처:** [**문의 전용 이메일 주소**]</li>
       </ul>
 
       <p className="text-xs text-gray-500 dark:text-gray-400 mt-10">

@@ -17,14 +17,14 @@ const AboutPage = () => {
         1. Seoan AI는 무엇인가요?
       </h2>
       <p className="mb-6 text-gray-700 dark:text-gray-300">
-        Seoan AI는 복잡한 코딩 문제를 쉽고 빠르게 해결해주고 사용자에게 큰 도움이 되기 위한 목표로 개발된 인공지능 기반의 챗봇 서비스입니다. 저희는 사용자들에게 빠르고 유용한 정보를 제공하여 일상과 업무를 돕기 위해 노력하고 있습니다.
+        Seoan AI는 **다양한 분야의 사용자들의 질문에 빠르고 정확하게 답변하기 위한 AI 챗봇**을 목표로 개발된 인공지능 기반의 챗봇 서비스입니다. 저희는 사용자들에게 유용한 정보를 제공하여 일상과 업무를 돕기 위해 노력하고 있습니다.
       </p>
 
       <h2 className="text-xl font-semibold mb-3 text-gray-800 dark:text-gray-200">
         2. 운영 주체
       </h2>
       <p className="mb-6 text-gray-700 dark:text-gray-300">
-        Seoan AI는 **개인 개발자 서안**에 의해 운영되고 있으며, 사용자 경험 개선과 더 나은 서비스 제공을 위해 지속적으로 업데이트하고 있습니다.
+        Seoan AI는 **익명의 개발팀**에 의해 운영되고 있으며, 사용자 경험 개선과 더 나은 서비스 제공을 위해 지속적으로 업데이트하고 있습니다.
       </p>
 
       <h2 className="text-xl font-semibold mb-3 text-gray-800 dark:text-gray-200">
@@ -34,7 +34,7 @@ const AboutPage = () => {
         서비스 이용 중 궁금한 사항이나 피드백, 협업 제안 등이 있다면 언제든지 아래 이메일로 연락 주시기 바랍니다.
       </p>
       <ul className="list-disc list-inside ml-4 text-gray-700 dark:text-gray-300 mt-2">
-        <li>**이메일:** seoan102410@gmail.com</li>
+        <li>**이메일:** **seoan102410@gmail.com**</li>
       </ul>
     </div>
   );

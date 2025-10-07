@@ -59,7 +59,7 @@ const PrivacyPolicyPage = () => {
       </p>
       <ul className="list-disc list-inside ml-4 text-gray-700 dark:text-gray-300 mt-2">
         <li>**책임자:** 운영팀</li>
-        <li>**연락처:** **contact@seoan-ai.com** (👈 이메일을 네 실제 주소로 변경해주세요!)</li>
+        <li>**연락처:** **seoan102410@gmail.com**</li>
       </ul>
 
       <p className="text-xs text-gray-500 dark:text-gray-400 mt-10">

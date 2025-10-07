@@ -13,7 +13,7 @@ const PrivacyPolicyPage = () => {
     <div className="max-w-4xl mx-auto p-4 md:p-8 lg:p-12 mt-12 mb-24">
       <h1 className="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">개인정보 처리방침</h1>
       <p className="text-sm text-gray-500 dark:text-gray-400 mb-8">
-        본 방침은 [시행일자: 2025년 10월 8일]부터 적용됩니다.
+        본 방침은 **[시행일자: 2025년 10월 8일]**부터 적용됩니다.
       </p>
 
       <h2 className="text-xl font-semibold mb-3 text-gray-800 dark:text-gray-200">
@@ -58,8 +58,8 @@ const PrivacyPolicyPage = () => {
         이용자는 서비스 이용과 관련하여 발생하는 모든 개인정보 보호 관련 문의, 불만 처리 등에 관한 사항을 아래 연락처로 문의해 주시기 바랍니다.
       </p>
       <ul className="list-disc list-inside ml-4 text-gray-700 dark:text-gray-300 mt-2">
-        <li>**책임자:** [**운영자**]</li>
-        <li>**연락처:** [**문의 전용 이메일 주소**]</li>
+        <li>**책임자:** 운영팀</li>
+        <li>**연락처:** **contact@seoan-ai.com** (👈 이메일을 네 실제 주소로 변경해주세요!)</li>
       </ul>
 
       <p className="text-xs text-gray-500 dark:text-gray-400 mt-10">

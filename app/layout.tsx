@@ -1,4 +1,4 @@
-import Link from 'next/link'; // 👈 Link 컴포넌트 추가
+import Link from 'next/link'; // Link 컴포넌트 추가
 import { Toaster } from 'sonner';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
@@ -28,8 +28,6 @@ const geistMono = Geist_Mono({
   display: 'swap',
   variable: '--font-geist-mono',
 });
-
-// ... (THEME_COLOR_SCRIPT는 생략하지 않고 그대로 유지)
 
 const LIGHT_THEME_COLOR = 'hsl(0 0% 100%)';
 const DARK_THEME_COLOR = 'hsl(240deg 10% 3.92%)';
@@ -84,7 +82,7 @@ export default async function RootLayout({
             {children}
             
             {/* ========================================================= */}
-            {/* ↓↓↓ 필수 페이지 링크와 면책 조항을 포함하는 고정 푸터 ↓↓↓ */}
+            {/* ↓↓↓ 필수 페이지 링크만 포함된 고정 푸터 ↓↓↓ */}
             {/* ========================================================= */}
             <footer 
               style={{
@@ -94,12 +92,12 @@ export default async function RootLayout({
                 right: 0,
                 backgroundColor: 'var(--geist-background-light)', 
                 zIndex: 1000, 
-                paddingBottom: '30px', // 면책 조항과 링크 공간 확보
+                padding: '8px 0', // 상하 패딩으로 높이 조절
               }}
               className="dark:bg-gray-900 bg-gray-50 border-t border-gray-200 dark:border-gray-800"
             >
-                {/* 1. 필수 페이지 링크 (고정 면책 조항 바로 위) */}
-                <div className="flex justify-center gap-4 py-2">
+                {/* 필수 페이지 링크 */}
+                <div className="flex justify-center gap-4 py-1">
                     <Link 
                         href="/privacy" // 👈 개인정보 처리방침 페이지 경로
                         className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 text-xs"
@@ -118,19 +116,6 @@ export default async function RootLayout({
                     >
                         사이트 소개 및 문의
                     </Link>
-                </div>
-
-                {/* 2. 연한 색상의 면책 조항 */}
-                <div
-                    style={{
-                        padding: '4px 0',
-                        fontSize: '0.7rem', 
-                        textAlign: 'center',
-                        lineHeight: '1.4',
-                    }}
-                    className="dark:text-gray-500 text-gray-500"
-                >
-                    Seoan AI는 실수할 수 있습니다. 중요한 정보는 다시 확인해주세요.
                 </div>
             </footer>
             {/* ========================================================= */}

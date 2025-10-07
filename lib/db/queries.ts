@@ -31,11 +31,6 @@ import type { ArtifactKind } from '@/components/artifact';
 import { generateUUID } from '../utils';
 import { generateHashedPassword } from './utils';
 
-// Optionally, if not using email/pass login, you can
-// use the Drizzle adapter for Auth.js / NextAuth
-// https://authjs.dev/reference/adapter/drizzle
-
-// biome-ignore lint: Forbidden non-null assertion.
 const client = postgres(process.env.POSTGRES_URL!);
 const db = drizzle(client);
 
@@ -471,12 +466,10 @@ export async function getMessageCountByUserId({
   }
 }
 
-// 🧹 1시간 지난 게스트 채팅 자동 삭제
 async function deleteExpiredGuestChats() {
   try {
     const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
 
-    // 1️⃣ 게스트 유저 찾기
     const guestUsers = await db
       .select({ id: user.id })
       .from(user)
@@ -486,7 +479,6 @@ async function deleteExpiredGuestChats() {
 
     const guestIds = guestUsers.map((u) => u.id);
 
-    // 2️⃣ 1시간 지난 게스트 채팅 찾기
     const expiredChats = await db
       .select({ id: chat.id })
       .from(chat)
@@ -497,17 +489,15 @@ async function deleteExpiredGuestChats() {
     const chatIds = expiredChats.map((c) => c.id);
     if (chatIds.length === 0) return;
 
-    // 3️⃣ 투표 → 메시지 → 채팅 순으로 삭제
     await db.delete(vote).where(inArray(vote.chatId, chatIds));
     await db.delete(message).where(inArray(message.chatId, chatIds));
     await db.delete(chat).where(inArray(chat.id, chatIds));
 
-    console.log(`🧹 ${chatIds.length} expired guest chats deleted`);
+    console.log(`${chatIds.length} expired guest chats deleted`);
   } catch (error) {
     console.error('Failed to delete expired guest chats:', error);
   }
 }
 
-// 🕐 서버 실행 시 한 번 실행 + 1시간마다 반복 실행
 deleteExpiredGuestChats();
 setInterval(deleteExpiredGuestChats, 60 * 60 * 1000);

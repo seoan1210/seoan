@@ -1,4 +1,4 @@
-import { Toaster } from 'sonner';
+Import { Toaster } from 'sonner';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
@@ -78,7 +78,35 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <Toaster position="top-center" />
-          <SessionProvider>{children}</SessionProvider>
+          <SessionProvider>
+            
+            {/* 메인 콘텐츠 (챗봇 화면 등) */}
+            {children}
+            
+            {/* ========================================================= */}
+            {/* ↓↓↓ 여기에 면책 조항을 추가했습니다. ↓↓↓ */}
+            {/* ========================================================= */}
+            <div 
+              style={{
+                position: 'fixed', // 화면 하단에 고정
+                bottom: 0, 
+                left: 0, 
+                right: 0,
+                padding: '8px 0',
+                backgroundColor: 'var(--geist-background-light)', // 배경색 설정 (테마에 따라 조정)
+                color: 'var(--geist-foreground-dark)', // 텍스트 색상 설정
+                textAlign: 'center',
+                fontSize: '0.75rem', 
+                borderTop: '1px solid var(--geist-separator)', // 상단에 얇은 구분선
+                zIndex: 1000, // 다른 요소 위에 오도록 z-index 설정
+              }}
+              className="dark:bg-gray-800 dark:text-gray-400 bg-gray-50 text-gray-600 border-t border-gray-200 dark:border-gray-700"
+            >
+              Seoan AI는 실수할 수 있습니다. 중요한 정보는 다시 확인해주세요.
+            </div>
+            {/* ========================================================= */}
+            
+          </SessionProvider>
         </ThemeProvider>
       </body>
     </html>

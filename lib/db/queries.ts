@@ -103,6 +103,15 @@ export async function deleteChatById({ id }: { id: string }) {
   return deleted;
 }
 
+// ✅ 추가: 유저별 채팅 목록 가져오기
+export async function getChatsByUserId({ userId }: { userId: string }) {
+  return await db
+    .select()
+    .from(chat)
+    .where(eq(chat.userId, userId))
+    .orderBy(desc(chat.createdAt));
+}
+
 // ────────────────────────────────────────────────
 // MESSAGES
 // ────────────────────────────────────────────────
@@ -132,9 +141,9 @@ export async function getMessagesByChatId({ id }: { id: string }) {
     .orderBy(asc(message.createdAt));
 }
 
+// ✅ 수정: 배열로 반환 (빌드 에러 해결)
 export async function getMessageById({ id }: { id: string }) {
-  const [found] = await db.select().from(message).where(eq(message.id, id));
-  return found;
+  return await db.select().from(message).where(eq(message.id, id));
 }
 
 export async function deleteMessagesByChatIdAfterTimestamp({

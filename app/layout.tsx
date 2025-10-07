@@ -1,4 +1,4 @@
-import { Toaster } from 'sonner';
+Import { Toaster } from 'sonner';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
@@ -84,7 +84,7 @@ export default async function RootLayout({
             {children}
             
             {/* ========================================================= */}
-            {/* ↓↓↓ 여기에 면책 조항을 추가했습니다. ↓↓↓ */}
+            {/* ↓↓↓ 색상이 더 연해진 면책 조항 코드 ↓↓↓ */}
             {/* ========================================================= */}
             <div 
               style={{
@@ -93,14 +93,13 @@ export default async function RootLayout({
                 left: 0, 
                 right: 0,
                 padding: '8px 0',
-                backgroundColor: 'var(--geist-background-light)', // 배경색 설정 (테마에 따라 조정)
-                color: 'var(--geist-foreground-dark)', // 텍스트 색상 설정
+                fontSize: '0.7rem', // 글씨 크기 더 작게
                 textAlign: 'center',
-                fontSize: '0.75rem', 
-                borderTop: '1px solid var(--geist-separator)', // 상단에 얇은 구분선
-                zIndex: 1000, // 다른 요소 위에 오도록 z-index 설정
+                zIndex: 1000, 
               }}
-              className="dark:bg-gray-800 dark:text-gray-400 bg-gray-50 text-gray-600 border-t border-gray-200 dark:border-gray-700"
+              // 배경색을 아주 연한 그레이(light: gray-50, dark: gray-900)로, 
+              // 텍스트 색상을 더 연한 그레이(light: gray-500, dark: gray-500)로 설정
+              className="dark:bg-gray-900 dark:text-gray-500 bg-gray-50 text-gray-500 border-t border-gray-200 dark:border-gray-800"
             >
               Seoan AI는 실수할 수 있습니다. 중요한 정보는 다시 확인해주세요.
             </div>

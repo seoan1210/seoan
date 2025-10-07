@@ -10,22 +10,46 @@ import {
   foreignKey,
   boolean,
 } from 'drizzle-orm/pg-core';
+import { sql } from 'drizzle-orm'; // defaultNow를 위한 sql 임포트
 
+// --------------------------------------------------------------------------
+// 사용자 테이블
+// --------------------------------------------------------------------------
 export const user = pgTable('User', {
-  id: uuid('id').primaryKey().notNull().defaultRandom(),
+  id: uuid('id').primaryKey().notNull().default(sql`gen_random_uuid()`),
   email: varchar('email', { length: 64 }).notNull(),
   password: varchar('password', { length: 64 }),
 });
 
 export type User = InferSelectModel<typeof user>;
 
+// --------------------------------------------------------------------------
+// ⭐️ 게스트 사용자 테이블 (분리)
+// --------------------------------------------------------------------------
+export const guestUser = pgTable('GuestUser', {
+  id: uuid('id').primaryKey().notNull().default(sql`gen_random_uuid()`),
+  email: varchar('email', { length: 64 }).notNull(),
+  createdAt: timestamp('createdAt').notNull().default(sql`now()`),
+});
+
+export type GuestUser = InferSelectModel<typeof guestUser>;
+
+// --------------------------------------------------------------------------
+// ⭐️ Chat 테이블 (regularUserId, guestUserId로 분리)
+// --------------------------------------------------------------------------
 export const chat = pgTable('Chat', {
-  id: uuid('id').primaryKey().notNull().defaultRandom(),
-  createdAt: timestamp('createdAt').notNull(),
+  id: uuid('id').primaryKey().notNull().default(sql`gen_random_uuid()`),
+  createdAt: timestamp('createdAt').notNull().default(sql`now()`),
   title: text('title').notNull(),
-  userId: uuid('userId')
-    .notNull()
-    .references(() => user.id),
+  
+  // 정식 사용자 ID (references User) - 게스트 채팅일 경우 null
+  regularUserId: uuid('regularUserId')
+    .references(() => user.id, { onDelete: 'cascade' }),
+    
+  // 게스트 사용자 ID (references GuestUser) - 정식 사용자 채팅일 경우 null
+  guestUserId: uuid('guestUserId')
+    .references(() => guestUser.id, { onDelete: 'cascade' }),
+    
   visibility: varchar('visibility', { enum: ['public', 'private'] })
     .notNull()
     .default('private'),
@@ -33,55 +57,25 @@ export const chat = pgTable('Chat', {
 
 export type Chat = InferSelectModel<typeof chat>;
 
-// DEPRECATED: The following schema is deprecated and will be removed in the future.
-// Read the migration guide at https://github.com/vercel/ai-chatbot/blob/main/docs/04-migrate-to-parts.md
-export const messageDeprecated = pgTable('Message', {
-  id: uuid('id').primaryKey().notNull().defaultRandom(),
-  chatId: uuid('chatId')
-    .notNull()
-    .references(() => chat.id),
-  role: varchar('role').notNull(),
-  content: json('content').notNull(),
-  createdAt: timestamp('createdAt').notNull(),
-});
-
-export type MessageDeprecated = InferSelectModel<typeof messageDeprecated>;
-
+// --------------------------------------------------------------------------
+// 메시지 테이블 (Chat 참조)
+// --------------------------------------------------------------------------
 export const message = pgTable('Message_v2', {
-  id: uuid('id').primaryKey().notNull().defaultRandom(),
+  id: uuid('id').primaryKey().notNull().default(sql`gen_random_uuid()`),
   chatId: uuid('chatId')
     .notNull()
     .references(() => chat.id),
   role: varchar('role').notNull(),
   parts: json('parts').notNull(),
   attachments: json('attachments').notNull(),
-  createdAt: timestamp('createdAt').notNull(),
+  createdAt: timestamp('createdAt').notNull().default(sql`now()`),
 });
 
 export type DBMessage = InferSelectModel<typeof message>;
 
-// DEPRECATED: The following schema is deprecated and will be removed in the future.
-// Read the migration guide at https://github.com/vercel/ai-chatbot/blob/main/docs/04-migrate-to-parts.md
-export const voteDeprecated = pgTable(
-  'Vote',
-  {
-    chatId: uuid('chatId')
-      .notNull()
-      .references(() => chat.id),
-    messageId: uuid('messageId')
-      .notNull()
-      .references(() => messageDeprecated.id),
-    isUpvoted: boolean('isUpvoted').notNull(),
-  },
-  (table) => {
-    return {
-      pk: primaryKey({ columns: [table.chatId, table.messageId] }),
-    };
-  },
-);
-
-export type VoteDeprecated = InferSelectModel<typeof voteDeprecated>;
-
+// --------------------------------------------------------------------------
+// 투표 테이블 (Message, Chat 참조)
+// --------------------------------------------------------------------------
 export const vote = pgTable(
   'Vote_v2',
   {
@@ -102,19 +96,24 @@ export const vote = pgTable(
 
 export type Vote = InferSelectModel<typeof vote>;
 
+// --------------------------------------------------------------------------
+// ⭐️ Document 테이블 (regularUserId, guestUserId로 분리)
+// --------------------------------------------------------------------------
 export const document = pgTable(
   'Document',
   {
-    id: uuid('id').notNull().defaultRandom(),
-    createdAt: timestamp('createdAt').notNull(),
+    id: uuid('id').notNull().default(sql`gen_random_uuid()`),
+    createdAt: timestamp('createdAt').notNull().default(sql`now()`),
     title: text('title').notNull(),
     content: text('content'),
     kind: varchar('text', { enum: ['text', 'code', 'image', 'sheet'] })
       .notNull()
       .default('text'),
-    userId: uuid('userId')
-      .notNull()
-      .references(() => user.id),
+      
+    regularUserId: uuid('regularUserId')
+      .references(() => user.id, { onDelete: 'cascade' }),
+    guestUserId: uuid('guestUserId')
+      .references(() => guestUser.id, { onDelete: 'cascade' }),
   },
   (table) => {
     return {
@@ -125,20 +124,26 @@ export const document = pgTable(
 
 export type Document = InferSelectModel<typeof document>;
 
+// --------------------------------------------------------------------------
+// ⭐️ Suggestion 테이블 (regularUserId, guestUserId로 분리)
+// --------------------------------------------------------------------------
 export const suggestion = pgTable(
   'Suggestion',
   {
-    id: uuid('id').notNull().defaultRandom(),
+    id: uuid('id').notNull().default(sql`gen_random_uuid()`),
     documentId: uuid('documentId').notNull(),
     documentCreatedAt: timestamp('documentCreatedAt').notNull(),
     originalText: text('originalText').notNull(),
     suggestedText: text('suggestedText').notNull(),
     description: text('description'),
     isResolved: boolean('isResolved').notNull().default(false),
-    userId: uuid('userId')
-      .notNull()
-      .references(() => user.id),
-    createdAt: timestamp('createdAt').notNull(),
+    
+    regularUserId: uuid('regularUserId')
+      .references(() => user.id, { onDelete: 'cascade' }),
+    guestUserId: uuid('guestUserId')
+      .references(() => guestUser.id, { onDelete: 'cascade' }),
+
+    createdAt: timestamp('createdAt').notNull().default(sql`now()`),
   },
   (table) => ({
     pk: primaryKey({ columns: [table.id] }),
@@ -150,3 +155,5 @@ export const suggestion = pgTable(
 );
 
 export type Suggestion = InferSelectModel<typeof suggestion>;
+
+// Deprecated 스키마들은 제거했습니다.

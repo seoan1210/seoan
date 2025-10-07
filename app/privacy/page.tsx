@@ -48,7 +48,7 @@ const PrivacyPolicyPage = () => {
         2. 개인정보의 제3자 제공 및 광고 게재
       </h2>
       <p className="mb-4 text-gray-700 dark:text-gray-300">
-        당사는 서비스 운영 및 수익화를 위해 **Google AdSense**를 통해 광고를 게재하며, 이 과정에서 이용자의 IP 주소, Cookie 정보 등 비식별화된 정보가 Google 및 광고 파트너에게 제공될 수 있습니다. 이용자는 브라우저 설정을 통해 Cookie를 거부하거나, Google 광고 설정 페이지를 통해 맞춤형 광고를 거부할 수 있습니다.
+        당사는 서비스 운영 및 수익화를 위해 <strong>Google AdSense<strong>를 통해 광고를 게재하며, 이 과정에서 이용자의 IP 주소, Cookie 정보 등 비식별화된 정보가 Google 및 광고 파트너에게 제공될 수 있습니다. 이용자는 브라우저 설정을 통해 Cookie를 거부하거나, Google 광고 설정 페이지를 통해 맞춤형 광고를 거부할 수 있습니다.
       </p>
       
       <h2 className="text-xl font-semibold mb-3 text-gray-800 dark:text-gray-200">
@@ -58,8 +58,7 @@ const PrivacyPolicyPage = () => {
         개인정보 보호 관련 문의는 아래 연락처로 문의해 주시기 바랍니다.
       </p>
       <ul className="list-disc list-inside ml-4 text-gray-700 dark:text-gray-300 mt-2">
-        <li>**책임자:** [**서안 님 이름**]</li>
-        <li>**연락처:** [**유효한 이메일 주소**]</li>
+        <li><strong>책임자:<strong> 서안</li>
       </ul>
 
       <p className="text-xs text-gray-500 dark:text-gray-400 mt-10">

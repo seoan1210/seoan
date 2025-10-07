@@ -1,3 +1,4 @@
+import Link from 'next/link'; // 👈 Link 컴포넌트 추가
 import { Toaster } from 'sonner';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
@@ -9,7 +10,7 @@ import { SessionProvider } from 'next-auth/react';
 export const metadata: Metadata = {
   metadataBase: new URL('https://seoan.vercel.app'),
   title: 'Seoan AI',
-  description: 'Welcome to Seoan  AI',
+  description: 'Welcome to Seoan AI',
 };
 
 export const viewport = {
@@ -27,6 +28,8 @@ const geistMono = Geist_Mono({
   display: 'swap',
   variable: '--font-geist-mono',
 });
+
+// ... (THEME_COLOR_SCRIPT는 생략하지 않고 그대로 유지)
 
 const LIGHT_THEME_COLOR = 'hsl(0 0% 100%)';
 const DARK_THEME_COLOR = 'hsl(240deg 10% 3.92%)';
@@ -48,6 +51,7 @@ const THEME_COLOR_SCRIPT = `\
   updateThemeColor();
 })();`;
 
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -56,10 +60,6 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      // `next-themes` injects an extra classname to the body element to avoid
-      // visual flicker before hydration. Hence the `suppressHydrationWarning`
-      // prop is necessary to avoid the React hydration mismatch warning.
-      // https://github.com/pacocoursey/next-themes?tab=readme-ov-file#with-app
       suppressHydrationWarning
       className={`${geist.variable} ${geistMono.variable}`}
     >
@@ -80,29 +80,59 @@ export default async function RootLayout({
           <Toaster position="top-center" />
           <SessionProvider>
             
-            {/* 메인 콘텐츠 (챗봇 화면 등) */}
+            {/* 메인 콘텐츠 */}
             {children}
             
             {/* ========================================================= */}
-            {/* ↓↓↓ 색상이 더 연해진 면책 조항 코드 ↓↓↓ */}
+            {/* ↓↓↓ 필수 페이지 링크와 면책 조항을 포함하는 고정 푸터 ↓↓↓ */}
             {/* ========================================================= */}
-            <div 
+            <footer 
               style={{
-                position: 'fixed', // 화면 하단에 고정
+                position: 'fixed', 
                 bottom: 0, 
                 left: 0, 
                 right: 0,
-                padding: '8px 0',
-                fontSize: '0.7rem', // 글씨 크기 더 작게
-                textAlign: 'center',
+                backgroundColor: 'var(--geist-background-light)', 
                 zIndex: 1000, 
+                paddingBottom: '30px', // 면책 조항과 링크 공간 확보
               }}
-              // 배경색을 아주 연한 그레이(light: gray-50, dark: gray-900)로, 
-              // 텍스트 색상을 더 연한 그레이(light: gray-500, dark: gray-500)로 설정
-              className="dark:bg-gray-900 dark:text-gray-500 bg-gray-50 text-gray-500 border-t border-gray-200 dark:border-gray-800"
+              className="dark:bg-gray-900 bg-gray-50 border-t border-gray-200 dark:border-gray-800"
             >
-              Seoan AI는 실수할 수 있습니다. 중요한 정보는 다시 확인해주세요.
-            </div>
+                {/* 1. 필수 페이지 링크 (고정 면책 조항 바로 위) */}
+                <div className="flex justify-center gap-4 py-2">
+                    <Link 
+                        href="/privacy" // 👈 개인정보 처리방침 페이지 경로
+                        className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 text-xs"
+                    >
+                        개인정보 처리방침
+                    </Link>
+                    <Link 
+                        href="/terms" // 👈 이용약관 페이지 경로
+                        className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 text-xs"
+                    >
+                        이용약관
+                    </Link>
+                    <Link 
+                        href="/about" // 👈 사이트 소개/문의 페이지 경로
+                        className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 text-xs"
+                    >
+                        사이트 소개 및 문의
+                    </Link>
+                </div>
+
+                {/* 2. 연한 색상의 면책 조항 */}
+                <div
+                    style={{
+                        padding: '4px 0',
+                        fontSize: '0.7rem', 
+                        textAlign: 'center',
+                        lineHeight: '1.4',
+                    }}
+                    className="dark:text-gray-500 text-gray-500"
+                >
+                    Seoan AI는 실수할 수 있습니다. 중요한 정보는 다시 확인해주세요.
+                </div>
+            </footer>
             {/* ========================================================= */}
             
           </SessionProvider>

@@ -50,7 +50,6 @@ export async function POST(request: Request) {
 
     const userType: UserType = session.user.type;
 
-    // ⭐️ 참고: getMessageCountByUserId도 regularUserId를 사용하도록 queries.ts에서 수정했어.
     const messageCount = await getMessageCountByUserId({
       id: session.user.id,
       differenceInHours: 24,
@@ -72,7 +71,7 @@ export async function POST(request: Request) {
         message,
       });
 
-      // ⭐️ 수정된 부분: saveChat에 isGuest: false 추가 (로그인 사용자이므로)
+      // ⭐️ 수정됨: saveChat에 isGuest: false를 추가하고 userId를 넘깁니다.
       await saveChat({ 
         id, 
         userId: session.user.id, 
@@ -81,11 +80,9 @@ export async function POST(request: Request) {
       });
       
     } else {
-      // ⭐️ 참고: chat.userId가 chat.regularUserId인지 chat.guestUserId인지
-      // 이 로직에서 명확하지 않으므로, chat 객체에 접근 권한을 판단하는
-      // isOwnedBy 함수를 만들어 쓰는 게 더 안전해. 
-      // 현재는 chat.regularUserId만 session.user.id와 비교한다고 가정합니다.
-      if (chat.userId !== session.user.id) {
+      // ⭐️ 수정됨: chat.userId 대신 chat.regularUserId를 사용합니다.
+      // 이 엔드포인트는 로그인된 정식 사용자만 접근하므로 regularUserId를 체크합니다.
+      if (chat.regularUserId !== session.user.id) { 
         return new Response('접근이 금지되었습니다.', { status: 403 });
       }
     }
@@ -223,10 +220,8 @@ export async function DELETE(request: Request) {
   try {
     const chat = await getChatById({ id });
 
-    // ⭐️ 참고: chat.userId는 이제 regularUserId 또는 guestUserId 중 하나여야 합니다.
-    // 기존 코드에서는 userId 하나로만 체크하지만, 새로운 스키마에서는
-    // chat.regularUserId === session.user.id 로 체크하는 것이 정확합니다.
-    if (chat.userId !== session.user.id) { 
+    // ⭐️ 수정됨: chat.userId 대신 chat.regularUserId를 사용합니다.
+    if (chat.regularUserId !== session.user.id) {
       return new Response('접근이 금지되었습니다.', { status: 403 });
     }
 

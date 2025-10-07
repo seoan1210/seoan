@@ -24,7 +24,7 @@ const AboutPage = () => {
         2. 운영 주체
       </h2>
       <p className="mb-6 text-gray-700 dark:text-gray-300">
-        Seoan AI는 **개인 개발자 [서안 님 이름]**에 의해 운영되고 있으며, 사용자 경험 개선과 더 나은 서비스 제공을 위해 지속적으로 업데이트하고 있습니다.
+        Seoan AI는 **개인 개발자 서안**에 의해 운영되고 있으며, 사용자 경험 개선과 더 나은 서비스 제공을 위해 지속적으로 업데이트하고 있습니다.
       </p>
 
       <h2 className="text-xl font-semibold mb-3 text-gray-800 dark:text-gray-200">

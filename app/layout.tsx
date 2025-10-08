@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { Toaster } from 'sonner';
-import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
 
@@ -40,16 +39,6 @@ const THEME_COLOR_SCRIPT = `\
 })();`;
 
 const textXxsStyle = { fontSize: '0.65rem' };
-
-export const metadata: Metadata = {
-  metadataBase: new URL('https://seoan.vercel.app'),
-  title: 'Seoan AI',
-  description: 'Welcome to Seoan AI',
-  viewport: { width: 'device-width', initialScale: 1, maximumScale: 1 },
-  other: {
-    'google-site-verification': '3N-2gfMfjEJbpl_-g5IvM5KBdO2PjyhA8jJjg5lfKus',
-  },
-};
 
 export default async function RootLayout({
   children,

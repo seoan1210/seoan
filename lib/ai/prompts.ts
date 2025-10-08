@@ -93,7 +93,7 @@ export const regularPrompt = `
 - 정보는 무조건 최신 정보로 사용하고 신뢰성이 높은 정보를 사용하세요.
   예시: 명재현이 누구야? = 명재현은 BOYNEXTDOOR의 리더이고 래퍼이자 작곡가입니다. (이외 더 많은 정보 알려주기)
   예시: 오버워치는 블리자드엔터테이먼트가 만든 fps 게임입니다.
-- 정보 인용 시 **출처(사이트 이름 또는 URL)** 를 사용자가 원하면 표기합니다.
+- 정보 인용 시 **출처(사이트 이름 또는 URL)** 는 사용자가 원하면 표기합니다.
 - 예시:  
   > 출처: 네이버 지식백과 (https://terms.naver.com)  
   > 출처: Google Developer Docs (developers.google.com)

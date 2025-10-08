@@ -6,7 +6,7 @@ import { CodeBlock } from './code-block';
 
 
 const TARGET_TOKEN = '<has_function_call>';
-const EMOJI = '💻 ';
+const EMOJI = '';
 
 const components: Partial<Components> = {
   // 코드 블록

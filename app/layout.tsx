@@ -11,10 +11,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://seoan.vercel.app'),
   title: 'Seoan AI',
   description: 'Welcome to Seoan AI',
-};
-
-export const viewport = {
-  maximumScale: 1, // Disable auto-zoom on mobile Safari
+  viewport: { width: 'device-width', initialScale: 1, maximumScale: 1 },
 };
 
 const geist = Geist({
@@ -49,8 +46,7 @@ const THEME_COLOR_SCRIPT = `\
   updateThemeColor();
 })();`;
 
-const textXxsStyle = { fontSize: '0.65rem' }; 
-
+const textXxsStyle = { fontSize: '0.65rem' };
 
 export default async function RootLayout({
   children,
@@ -64,6 +60,10 @@ export default async function RootLayout({
       className={`${geist.variable} ${geistMono.variable}`}
     >
       <head>
+        <meta
+          name="google-site-verification"
+          content="3N-2gfMfjEJbpl_-g5IvM5KBdO2PjyhA8jJjg5lfKus"
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: THEME_COLOR_SCRIPT,
@@ -80,42 +80,42 @@ export default async function RootLayout({
           <Toaster position="top-center" />
           <SessionProvider>
             {children}
-            <footer 
+            <footer
               style={{
-                position: 'fixed', 
-                bottom: 0, 
-                left: 0, 
+                position: 'fixed',
+                bottom: 0,
+                left: 0,
                 right: 0,
-                backgroundColor: 'var(--geist-background-light)', 
-                zIndex: 1000, 
+                backgroundColor: 'var(--geist-background-light)',
+                zIndex: 1000,
               }}
-              className="dark:bg-gray-900 bg-gray-50 hidden sm:block" 
+              className="dark:bg-gray-900 bg-gray-50 hidden sm:block"
             >
-                <div className="h-full flex flex-col justify-end">
-                    <div className="flex justify-center gap-4 py-2">
-                        <Link 
-                            href="/privacy"
-                            className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
-                            style={textXxsStyle}
-                        >
-                            개인정보 처리방침
-                        </Link>
-                        <Link 
-                            href="/terms"
-                            className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
-                            style={textXxsStyle}
-                        >
-                            이용약관
-                        </Link>
-                        <Link 
-                            href="/about"
-                            className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
-                            style={textXxsStyle}
-                        >
-                            사이트 소개 및 문의
-                        </Link>
-                    </div>
+              <div className="h-full flex flex-col justify-end">
+                <div className="flex justify-center gap-4 py-2">
+                  <Link
+                    href="/privacy"
+                    className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                    style={textXxsStyle}
+                  >
+                    개인정보 처리방침
+                  </Link>
+                  <Link
+                    href="/terms"
+                    className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                    style={textXxsStyle}
+                  >
+                    이용약관
+                  </Link>
+                  <Link
+                    href="/about"
+                    className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                    style={textXxsStyle}
+                  >
+                    사이트 소개 및 문의
+                  </Link>
                 </div>
+              </div>
             </footer>
           </SessionProvider>
         </ThemeProvider>

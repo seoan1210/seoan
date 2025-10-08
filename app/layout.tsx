@@ -7,13 +7,6 @@ import { ThemeProvider } from '@/components/theme-provider';
 import './globals.css';
 import { SessionProvider } from 'next-auth/react';
 
-export const metadata: Metadata = {
-  metadataBase: new URL('https://seoan.vercel.app'),
-  title: 'Seoan AI',
-  description: 'Welcome to Seoan AI',
-  viewport: { width: 'device-width', initialScale: 1, maximumScale: 1 },
-};
-
 const geist = Geist({
   subsets: ['latin'],
   display: 'swap',
@@ -48,6 +41,16 @@ const THEME_COLOR_SCRIPT = `\
 
 const textXxsStyle = { fontSize: '0.65rem' };
 
+export const metadata: Metadata = {
+  metadataBase: new URL('https://seoan.vercel.app'),
+  title: 'Seoan AI',
+  description: 'Welcome to Seoan AI',
+  viewport: { width: 'device-width', initialScale: 1, maximumScale: 1 },
+  other: {
+    'google-site-verification': '3N-2gfMfjEJbpl_-g5IvM5KBdO2PjyhA8jJjg5lfKus',
+  },
+};
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -60,12 +63,6 @@ export default async function RootLayout({
       className={`${geist.variable} ${geistMono.variable}`}
     >
       <head>
-        {/* 구글 사이트 인증 */}
-        <meta
-          name="google-site-verification"
-          content="3N-2gfMfjEJbpl_-g5IvM5KBdO2PjyhA8jJjg5lfKus"
-        />
-        {/* 다크/라이트 모드 theme-color */}
         <script
           dangerouslySetInnerHTML={{
             __html: THEME_COLOR_SCRIPT,

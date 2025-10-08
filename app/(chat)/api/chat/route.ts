@@ -70,9 +70,9 @@ export async function POST(request: Request) {
       id: msg.id,
       chatId: msg.chatId,
       role: msg.role,
-      content: Array.isArray(msg.parts) ? msg.parts.join('') : msg.parts ?? '',
+      content: Array.isArray(msg.parts) ? msg.parts.join('') : String(msg.parts ?? ''),
       parts: msg.parts,
-      attachments: msg.attachments ?? [],
+      attachments: msg.attachments ?? {},
       createdAt: msg.createdAt,
     }));
 
@@ -81,6 +81,7 @@ export async function POST(request: Request) {
     const { longitude, latitude, city, country } = geolocation(request);
     const requestHints: RequestHints = { longitude, latitude, city, country };
 
+    // 유저 메시지 저장
     await saveMessages({
       messages: [
         {
@@ -88,8 +89,8 @@ export async function POST(request: Request) {
           id: message.id,
           role: 'user',
           parts: message.parts,
-          content: Array.isArray(message.parts) ? message.parts.join('') : message.parts ?? '',
-          attachments: message.experimental_attachments ?? [],
+          content: Array.isArray(message.parts) ? message.parts.join('') : String(message.parts ?? ''),
+          attachments: message.experimental_attachments ?? {},
           createdAt: new Date(),
         },
       ],
@@ -116,36 +117,36 @@ export async function POST(request: Request) {
             requestSuggestions: requestSuggestions({ session, dataStream }),
           },
           onFinish: async ({ response }) => {
-            if (session.user?.id) {
-              try {
-                const assistantId = getTrailingMessageId({
-                  messages: response.messages.filter((msg) => msg.role === 'assistant'),
-                });
-                if (!assistantId) throw new Error('어시스턴트 메시지를 찾을 수 없습니다!');
+            if (!session.user?.id) return;
 
-                const [, assistantMessage] = appendResponseMessages({
-                  messages: [message],
-                  responseMessages: response.messages,
-                });
+            try {
+              const assistantId = getTrailingMessageId({
+                messages: response.messages.filter((msg) => msg.role === 'assistant'),
+              });
+              if (!assistantId) throw new Error('어시스턴트 메시지를 찾을 수 없습니다!');
 
-                await saveMessages({
-                  messages: [
-                    {
-                      id: assistantId,
-                      chatId: id,
-                      role: assistantMessage.role,
-                      parts: assistantMessage.parts,
-                      content: Array.isArray(assistantMessage.parts)
-                        ? assistantMessage.parts.join('')
-                        : assistantMessage.parts ?? '',
-                      attachments: assistantMessage.experimental_attachments ?? [],
-                      createdAt: new Date(),
-                    },
-                  ],
-                });
-              } catch (_) {
-                console.error('채팅 저장에 실패했습니다.');
-              }
+              const [, assistantMessage] = appendResponseMessages({
+                messages: [message],
+                responseMessages: response.messages,
+              });
+
+              await saveMessages({
+                messages: [
+                  {
+                    id: assistantId,
+                    chatId: id,
+                    role: assistantMessage.role,
+                    parts: assistantMessage.parts,
+                    content: Array.isArray(assistantMessage.parts)
+                      ? assistantMessage.parts.join('')
+                      : String(assistantMessage.parts ?? ''),
+                    attachments: assistantMessage.experimental_attachments ?? {},
+                    createdAt: new Date(),
+                  },
+                ],
+              });
+            } catch (_) {
+              console.error('채팅 저장에 실패했습니다.');
             }
           },
         });

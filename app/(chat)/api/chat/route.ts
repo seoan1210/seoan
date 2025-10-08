@@ -64,7 +64,18 @@ export async function POST(request: Request) {
       return new Response('접근이 금지되었습니다.', { status: 403 });
     }
 
-    const previousMessages = await getMessagesByChatId({ id });
+    // 이전 메시지 가져오기 및 타입 변환
+    const previousMessagesRaw = await getMessagesByChatId({ id });
+    const previousMessages = previousMessagesRaw.map((msg) => ({
+      id: msg.id,
+      chatId: msg.chatId,
+      role: msg.role,
+      content: Array.isArray(msg.parts) ? msg.parts.join('') : msg.parts ?? '',
+      parts: msg.parts,
+      attachments: msg.attachments ?? [],
+      createdAt: msg.createdAt,
+    }));
+
     const messages = appendClientMessage({ messages: previousMessages, message });
 
     const { longitude, latitude, city, country } = geolocation(request);
@@ -77,6 +88,7 @@ export async function POST(request: Request) {
           id: message.id,
           role: 'user',
           parts: message.parts,
+          content: Array.isArray(message.parts) ? message.parts.join('') : message.parts ?? '',
           attachments: message.experimental_attachments ?? [],
           createdAt: new Date(),
         },
@@ -123,6 +135,9 @@ export async function POST(request: Request) {
                       chatId: id,
                       role: assistantMessage.role,
                       parts: assistantMessage.parts,
+                      content: Array.isArray(assistantMessage.parts)
+                        ? assistantMessage.parts.join('')
+                        : assistantMessage.parts ?? '',
                       attachments: assistantMessage.experimental_attachments ?? [],
                       createdAt: new Date(),
                     },

@@ -60,10 +60,12 @@ export default async function RootLayout({
       className={`${geist.variable} ${geistMono.variable}`}
     >
       <head>
+        {/* 구글 사이트 인증 */}
         <meta
           name="google-site-verification"
           content="3N-2gfMfjEJbpl_-g5IvM5KBdO2PjyhA8jJjg5lfKus"
         />
+        {/* 다크/라이트 모드 theme-color */}
         <script
           dangerouslySetInnerHTML={{
             __html: THEME_COLOR_SCRIPT,

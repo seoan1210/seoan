@@ -63,6 +63,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" suppressHydrationWarning className={`${geist.variable} ${geistMono.variable}`}>
       <head>
+        <meta name="google-site-verification" content="3N-2gfMfjEJbpl_-g5IvM5KBdO2PjyhA8jJjg5lfKus" />
         <script dangerouslySetInnerHTML={{ __html: THEME_COLOR_SCRIPT }} />
       </head>
       <body className="antialiased">

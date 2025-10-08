@@ -79,7 +79,7 @@ export const enhancedSearchPrompt = `
 1. 핵심 키워드 추출  
 2. 결과 부족 → 유사 키워드/영문 변환 재검색  
 3. 상위 3개 출처 교차 검증  
-4. 최소 5번 검색
+4. 최소 10번 이상 검색
 
 #### 3️⃣ AutoLangDetect
 - 한글, 영어, 일본어, 로마자 이름 자동 인식  
@@ -100,7 +100,7 @@ export const enhancedSearchPrompt = `
 - 캐시 만료 기준: 24시간  
 
 #### 6️⃣ Adaptive Retry
-- 검색 실패 시 유사 키워드 조합으로 5회 재검색  
+- 검색 실패 시 유사 키워드 조합으로 5회 재검색
 - 예: “보이넥스트도어 명재현” → “BOYNEXTDOOR Jaehyun” → “명재현 리더”
 
 #### 7️⃣ Context Memory

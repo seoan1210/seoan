@@ -1,4 +1,6 @@
-export async function searchWeb({ query }: { query: string }) {
+import type { Tool } from 'ai';
+
+export const searchWeb: Tool<{ query: string }, { role: string; content: string }> = async ({ query }) => {
   const apiKey = process.env.SERPER_API_KEY;
   if (!apiKey) throw new Error('❌ SERPER_API_KEY가 설정되지 않았어요!');
 
@@ -15,8 +17,6 @@ export async function searchWeb({ query }: { query: string }) {
     if (!response.ok) throw new Error(`검색 요청 실패: ${response.status}`);
 
     const data = await response.json();
-
-    // 검색 결과 5개만 추출
     const organic = data.organic ?? [];
     const results = organic
       .slice(0, 5)
@@ -31,4 +31,4 @@ export async function searchWeb({ query }: { query: string }) {
     console.error('🌐 searchWeb 오류:', error);
     return { role: 'tool', content: '검색 중 오류가 발생했어요.' };
   }
-}
+};

@@ -49,6 +49,9 @@ const THEME_COLOR_SCRIPT = `\
   updateThemeColor();
 })();`;
 
+// Tailwind CSS에 text-xxs를 지원하지 않을 경우를 대비하여 인라인 스타일을 사용합니다.
+const textXxsStyle = { fontSize: '0.65rem' }; 
+
 
 export default async function RootLayout({
   children,
@@ -77,13 +80,7 @@ export default async function RootLayout({
         >
           <Toaster position="top-center" />
           <SessionProvider>
-            
-            {/* 메인 콘텐츠 */}
             {children}
-            
-            {/* ========================================================= */}
-            {/* ↓↓↓ 필수 페이지 링크만 포함된 고정 푸터 (링크 최하단 정렬) ↓↓↓ */}
-            {/* ========================================================= */}
             <footer 
               style={{
                 position: 'fixed', 
@@ -93,38 +90,34 @@ export default async function RootLayout({
                 backgroundColor: 'var(--geist-background-light)', 
                 zIndex: 1000, 
               }}
-              className="dark:bg-gray-900 bg-gray-50 border-t border-gray-200 dark:border-gray-800"
+              className="dark:bg-gray-900 bg-gray-50"
             >
-                {/* Flexbox를 사용하여 하단에 링크를 밀어 넣습니다.
-                  - h-full: 부모 푸터의 높이를 꽉 채웁니다.
-                  - flex-col: 세로 방향으로 정렬합니다.
-                  - justify-end: 내용을 컨테이너의 맨 아래로 보냅니다.
-                */}
                 <div className="h-full flex flex-col justify-end">
                     <div className="flex justify-center gap-4 py-2">
                         <Link 
-                            href="/privacy" // 👈 개인정보 처리방침 페이지 경로
-                            className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 text-xs"
+                            href="/privacy"
+                            className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                            style={textXxsStyle}
                         >
                             개인정보 처리방침
                         </Link>
                         <Link 
-                            href="/terms" // 👈 이용약관 페이지 경로
-                            className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 text-xs"
+                            href="/terms"
+                            className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                            style={textXxsStyle}
                         >
                             이용약관
                         </Link>
                         <Link 
-                            href="/about" // 👈 사이트 소개/문의 페이지 경로
-                            className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 text-xs"
+                            href="/about"
+                            className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                            style={textXxsStyle}
                         >
                             사이트 소개 및 문의
                         </Link>
                     </div>
                 </div>
             </footer>
-            {/* ========================================================= */}
-            
           </SessionProvider>
         </ThemeProvider>
       </body>

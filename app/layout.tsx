@@ -49,7 +49,6 @@ const THEME_COLOR_SCRIPT = `\
   updateThemeColor();
 })();`;
 
-// Tailwind CSS에 text-xxs를 지원하지 않을 경우를 대비하여 인라인 스타일을 사용합니다.
 const textXxsStyle = { fontSize: '0.65rem' }; 
 
 
@@ -90,7 +89,7 @@ export default async function RootLayout({
                 backgroundColor: 'var(--geist-background-light)', 
                 zIndex: 1000, 
               }}
-              className="dark:bg-gray-900 bg-gray-50"
+              className="dark:bg-gray-900 bg-gray-50 hidden sm:block" 
             >
                 <div className="h-full flex flex-col justify-end">
                     <div className="flex justify-center gap-4 py-2">

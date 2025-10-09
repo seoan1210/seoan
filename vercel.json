@@ -1,0 +1,12 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        { "type": "host", "value": "seoan.kro.kr" }
+      ],
+      "destination": "https://seoan.kro.kr/$1",
+      "permanent": true
+    }
+  ]
+}

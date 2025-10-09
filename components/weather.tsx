@@ -4,6 +4,9 @@ import cx from 'classnames';
 import { format, isWithinInterval } from 'date-fns';
 import { useEffect, useState } from 'react';
 
+// WeatherAtLocation 인터페이스 및 SAMPLE 데이터는 변경 없음
+// ... (Your WeatherAtLocation Interface and SAMPLE data)
+
 interface WeatherAtLocation {
   latitude: number;
   longitude: number;
@@ -42,7 +45,7 @@ interface WeatherAtLocation {
   };
 }
 
-const SAMPLE = {
+const SAMPLE: WeatherAtLocation = {
   latitude: 37.763283,
   longitude: -122.41286,
   generationtime_ms: 0.027894973754882812,
@@ -213,10 +216,14 @@ export function Weather({
     ...weatherAtLocation.hourly.temperature_2m.slice(0, 24),
   );
 
-  const isDay = isWithinInterval(new Date(weatherAtLocation.current.time), {
-    start: new Date(weatherAtLocation.daily.sunrise[0]),
-    end: new Date(weatherAtLocation.daily.sunset[0]),
-  });
+  // ⚠️ UTC 시간대로 날짜/시간 비교를 명시적으로 처리
+  const isDay = isWithinInterval(
+    new Date(weatherAtLocation.current.time + ':00Z'),
+    {
+      start: new Date(weatherAtLocation.daily.sunrise[0] + 'Z'),
+      end: new Date(weatherAtLocation.daily.sunset[0] + 'Z'),
+    },
+  );
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -225,16 +232,19 @@ export function Weather({
       setIsMobile(window.innerWidth < 768);
     };
 
-handleResize();
-window.addEventListener('resize', handleResize);
+    handleResize();
+    window.addEventListener('resize', handleResize);
 
-return () => window.removeEventListener('resize', handleResize);  }, []);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const hoursToShow = isMobile ? 5 : 6;
 
   // Find the index of the current time or the next closest time
   const currentTimeIndex = weatherAtLocation.hourly.time.findIndex(
-    (time) => new Date(time) >= new Date(weatherAtLocation.current.time),
+    // UTC 파싱 일관성 유지를 위해 현재 시간에도 ':00Z' 사용
+    (time) =>
+      new Date(time + ':00Z') >= new Date(weatherAtLocation.current.time + ':00Z'),
   );
 
   // Slice the arrays to get the desired number of items
@@ -247,30 +257,22 @@ return () => window.removeEventListener('resize', handleResize);  }, []);
     currentTimeIndex + hoursToShow,
   );
 
+  // ✨ 조건부 스타일링 클래스 추출
+  const backgroundClass = isDay ? 'bg-blue-400' : 'bg-indigo-900';
+  const iconClass = isDay ? 'bg-yellow-300' : 'bg-indigo-100';
+  const hourlyIconClass = isDay ? 'bg-yellow-300' : 'bg-indigo-200';
+
   return (
     <div
       className={cx(
         'flex flex-col gap-4 rounded-2xl p-4 skeleton-bg max-w-[500px]',
-        {
-          'bg-blue-400': isDay,
-        },
-        {
-          'bg-indigo-900': !isDay,
-        },
+        backgroundClass,
       )}
     >
       <div className="flex flex-row justify-between items-center">
         <div className="flex flex-row gap-2 items-center">
           <div
-            className={cx(
-              'size-10 rounded-full skeleton-div',
-              {
-                'bg-yellow-300': isDay,
-              },
-              {
-                'bg-indigo-100': !isDay,
-              },
-            )}
+            className={cx('size-10 rounded-full skeleton-div', iconClass)}
           />
           <div className="text-4xl font-medium text-blue-50">
             {n(weatherAtLocation.current.temperature_2m)}
@@ -278,33 +280,28 @@ return () => window.removeEventListener('resize', handleResize);  }, []);
           </div>
         </div>
 
-    <div className="text-blue-50">{H:${n(currentHigh)}° L:${n(currentLow)}°}</div>
-  </div>
-
-  <div className="flex flex-row justify-between">
-    {displayTimes.map((time, index) => (
-      <div key={time} className="flex flex-col items-center gap-1">
-        <div className="text-blue-100 text-xs">
-          {format(new Date(time), 'ha')}
-        </div>
-        <div
-          className={cx(
-            'size-6 rounded-full skeleton-div',
-            {
-              'bg-yellow-300': isDay,
-            },
-            {
-              'bg-indigo-200': !isDay,
-            },
-          )}
-        />
-        <div className="text-blue-50 text-sm">
-          {n(displayTemperatures[index])}
-          {weatherAtLocation.hourly_units.temperature_2m}
+        <div className="text-blue-50">
+          {`H:${n(currentHigh)}° L:${n(currentLow)}°`}
         </div>
       </div>
-    ))}
-  </div>
-</div>
+
+      <div className="flex flex-row justify-between">
+        {displayTimes.map((time, index) => (
+          <div key={time} className="flex flex-col items-center gap-1">
+            <div className="text-blue-100 text-xs">
+              {/* UTC로 파싱하여 로컬 시간으로 변환 후 'ha' 포맷 적용 */}
+              {format(new Date(time + 'Z'), 'ha')} 
+            </div>
+            <div
+              className={cx('size-6 rounded-full skeleton-div', hourlyIconClass)}
+            />
+            <div className="text-blue-50 text-sm">
+              {n(displayTemperatures[index])}
+              {weatherAtLocation.hourly_units.temperature_2m}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

@@ -67,6 +67,7 @@ export const enhancedSearchPrompt = `
 네이버, 구글로만 검색합니다.
 **매우 중요**
 **답변 전 검색을 하고 답변을 하세요.찾고 있다. 검색해보겠단 말 없이 미리 검색을 하고 답변하세요.**
+**날씨 정보는 getweather 로 사용자에게 보여주고 답변을 하세요.**
 ---
 
 ### 🚀 Smart Search Engine Rules

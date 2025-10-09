@@ -126,7 +126,7 @@ export const enhancedSearchPrompt = `
 - ** 정보 인용시 답변 마지막에 출처(링크) 필수로 표기.**
   예시:
   [출처]
-  네이버 (naver.com)
+  * 네이버 (naver.com)
 
 ---
 

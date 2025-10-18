@@ -4,15 +4,15 @@
 
 :root {
     --foreground-rgb: 0, 0, 0;
-    --background-start-rgb: 214, 219, 220;
+    --background-start-rgb: 245, 245, 240; /* 변경된 라이트 배경색에 맞춤 */
     --background-end-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --foreground-rgb: 255, 255, 255;
-        --background-start-rgb: 0, 0, 0;
-        --background-end-rgb: 0, 0, 0;
+        --foreground-rgb: 250, 250, 240; /* 변경된 다크 텍스트색에 맞춤 */
+        --background-start-rgb: 25, 30, 35; /* 변경된 다크 배경색에 맞춤 */
+        --background-end-rgb: 25, 30, 35;
     }
 }
 
@@ -24,73 +24,75 @@
 
 @layer base {
     :root {
-        --background: 0 0% 100%;
-        --foreground: 240 10% 3.9%;
-        --card: 0 0% 100%;
-        --card-foreground: 240 10% 3.9%;
+        /* 라이트 모드 (따뜻한 모던 스타일) */
+        --background: 40 10% 98%;      /* 아주 연한 크림색 (배경) */
+        --foreground: 220 10% 15%;     /* 짙은 차콜색 (텍스트) */
+        --card: 0 0% 100%;             /* 카드 배경은 깨끗한 흰색 */
+        --card-foreground: 220 10% 15%;
         --popover: 0 0% 100%;
-        --popover-foreground: 240 10% 3.9%;
-        --primary: 240 5.9% 10%;
-        --primary-foreground: 0 0% 98%;
-        --secondary: 240 4.8% 95.9%;
-        --secondary-foreground: 240 5.9% 10%;
-        --muted: 240 4.8% 95.9%;
-        --muted-foreground: 240 3.8% 46.1%;
-        --accent: 240 4.8% 95.9%;
-        --accent-foreground: 240 5.9% 10%;
-        --destructive: 0 84.2% 60.2%;
+        --popover-foreground: 220 10% 15%;
+        --primary: 180 50% 35%;        /* 차분하고 세련된 틸(Teal) 계열 (주 색상) */
+        --primary-foreground: 0 0% 98%;/* 주 색상 위 텍스트 (거의 흰색) */
+        --secondary: 40 10% 90%;       /* 연한 베이지/회색 (보조 배경) */
+        --secondary-foreground: 220 10% 25%;
+        --muted: 40 10% 92%;           /* 더욱 연한 보조 배경 */
+        --muted-foreground: 220 5% 50%;/* 흐린 텍스트 */
+        --accent: 180 15% 90%;         /* 액센트 색상은 옅은 틸 */
+        --accent-foreground: 220 10% 15%;
+        --destructive: 0 80% 55%;      /* 경고/에러는 선명한 빨간색 */
         --destructive-foreground: 0 0% 98%;
-        --border: 240 5.9% 90%;
-        --input: 240 5.9% 90%;
-        --ring: 240 10% 3.9%;
-        --chart-1: 12 76% 61%;
-        --chart-2: 173 58% 39%;
-        --chart-3: 197 37% 24%;
-        --chart-4: 43 74% 66%;
-        --chart-5: 27 87% 67%;
+        --border: 40 5% 85%;           /* 연한 테두리 */
+        --input: 40 5% 85%;
+        --ring: 180 50% 50%;           /* 포커스 링은 주 색상으로 */
+        --chart-1: 180 60% 50%;
+        --chart-2: 40 70% 60%;
+        --chart-3: 300 50% 60%;
+        --chart-4: 25 70% 60%;
+        --chart-5: 220 60% 65%;
         --radius: 0.5rem;
-        --sidebar-background: 0 0% 98%;
-        --sidebar-foreground: 240 5.3% 26.1%;
-        --sidebar-primary: 240 5.9% 10%;
+        --sidebar-background: 40 10% 95%;
+        --sidebar-foreground: 220 10% 15%;
+        --sidebar-primary: 180 50% 35%;
         --sidebar-primary-foreground: 0 0% 98%;
-        --sidebar-accent: 240 4.8% 95.9%;
-        --sidebar-accent-foreground: 240 5.9% 10%;
-        --sidebar-border: 220 13% 91%;
-        --sidebar-ring: 217.2 91.2% 59.8%;
+        --sidebar-accent: 180 15% 80%;
+        --sidebar-accent-foreground: 220 10% 15%;
+        --sidebar-border: 40 5% 80%;
+        --sidebar-ring: 180 50% 50%;
     }
     .dark {
-        --background: 240 10% 3.9%;
-        --foreground: 0 0% 98%;
-        --card: 240 10% 3.9%;
-        --card-foreground: 0 0% 98%;
-        --popover: 240 10% 3.9%;
-        --popover-foreground: 0 0% 98%;
-        --primary: 0 0% 98%;
-        --primary-foreground: 240 5.9% 10%;
-        --secondary: 240 3.7% 15.9%;
-        --secondary-foreground: 0 0% 98%;
-        --muted: 240 3.7% 15.9%;
-        --muted-foreground: 240 5% 64.9%;
-        --accent: 240 3.7% 15.9%;
-        --accent-foreground: 0 0% 98%;
-        --destructive: 0 62.8% 30.6%;
+        /* 다크 모드 (깊이감 있는 다크 스타일) */
+        --background: 220 15% 10%;     /* 깊은 차콜 블루 (배경) */
+        --foreground: 40 10% 90%;      /* 부드러운 오프-화이트 (텍스트) */
+        --card: 220 15% 12%;           /* 카드 배경은 살짝 더 밝게 */
+        --card-foreground: 40 10% 90%;
+        --popover: 220 15% 12%;
+        --popover-foreground: 40 10% 90%;
+        --primary: 180 40% 60%;        /* 밝고 눈에 띄는 틸 계열 (주 색상) */
+        --primary-foreground: 220 15% 10%; /* 주 색상 위 텍스트 (어둡게) */
+        --secondary: 220 10% 20%;      /* 보조 배경은 어두운 톤 */
+        --secondary-foreground: 40 10% 90%;
+        --muted: 220 10% 20%;
+        --muted-foreground: 220 5% 65%;
+        --accent: 220 10% 25%;
+        --accent-foreground: 40 10% 90%;
+        --destructive: 0 60% 40%;      /* 다크 모드 경고색은 톤 다운 */
         --destructive-foreground: 0 0% 98%;
-        --border: 240 3.7% 15.9%;
-        --input: 240 3.7% 15.9%;
-        --ring: 240 4.9% 83.9%;
-        --chart-1: 220 70% 50%;
-        --chart-2: 160 60% 45%;
-        --chart-3: 30 80% 55%;
-        --chart-4: 280 65% 60%;
-        --chart-5: 340 75% 55%;
-        --sidebar-background: 240 5.9% 10%;
-        --sidebar-foreground: 240 4.8% 95.9%;
-        --sidebar-primary: 224.3 76.3% 48%;
-        --sidebar-primary-foreground: 0 0% 100%;
-        --sidebar-accent: 240 3.7% 15.9%;
-        --sidebar-accent-foreground: 240 4.8% 95.9%;
-        --sidebar-border: 240 3.7% 15.9%;
-        --sidebar-ring: 217.2 91.2% 59.8%;
+        --border: 220 10% 20%;
+        --input: 220 10% 20%;
+        --ring: 180 40% 60%;
+        --chart-1: 180 55% 70%;
+        --chart-2: 40 65% 75%;
+        --chart-3: 300 45% 75%;
+        --chart-4: 25 65% 75%;
+        --chart-5: 220 55% 80%;
+        --sidebar-background: 220 15% 8%;
+        --sidebar-foreground: 40 10% 90%;
+        --sidebar-primary: 180 40% 60%;
+        --sidebar-primary-foreground: 220 15% 10%;
+        --sidebar-accent: 220 10% 20%;
+        --sidebar-accent-foreground: 40 10% 90%;
+        --sidebar-border: 220 10% 20%;
+        --sidebar-ring: 180 40% 60%;
     }
 }
 
@@ -111,7 +113,8 @@
 
     *[class^="text-"] {
         color: transparent;
-        @apply rounded-md bg-foreground/20 select-none animate-pulse;
+        /* bg-foreground/20는 새로운 전경색을 기반으로 작동 */
+        @apply rounded-md bg-foreground/20 select-none animate-pulse; 
     }
 
     .skeleton-bg {
@@ -127,15 +130,17 @@
     outline: none;
 }
 
+/* 코드 에디터 스타일도 새로운 색상으로 적용 */
 .cm-editor,
 .cm-gutters {
-    @apply bg-background dark:bg-zinc-800 outline-none selection:bg-zinc-900 !important;
+    @apply bg-background dark:bg-[hsl(220_15%_12%)] outline-none selection:bg-primary/20 !important;
 }
 
 .ͼo.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground,
 .ͼo.cm-selectionBackground,
 .ͼo.cm-content::selection {
-    @apply bg-zinc-200 dark:bg-zinc-900 !important;
+    /* 선택 배경색을 기본 테마 색상과 통일 */
+    @apply bg-secondary dark:bg-primary/20 !important;
 }
 
 .cm-activeLine,
@@ -160,5 +165,6 @@
 }
 
 .suggestion-highlight {
-    @apply bg-blue-200 hover:bg-blue-300 dark:hover:bg-blue-400/50 dark:text-blue-50 dark:bg-blue-500/40;
+    /* 제안 하이라이트도 주 색상과 통일 */
+    @apply bg-primary/30 hover:bg-primary/50 dark:hover:bg-primary/60 dark:text-primary-foreground dark:bg-primary/40;
 }

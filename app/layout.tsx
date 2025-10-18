@@ -9,7 +9,7 @@ import './globals.css';
 
 // --- Metadata ---
 export const metadata: Metadata = {
-  metadataBase: new URL('https://seoan.vercel.app'),
+  metadataBase: new URL('https://seoan.kro.kr'),
   title: 'Seoan AI',
   description: 'Welcome to Seoan AI',
 };
